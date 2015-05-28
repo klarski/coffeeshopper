@@ -1,0 +1,156 @@
+body {
+  font-family: "Lucida Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #38281E;
+  background-color: #fff;
+}
+
+a, .my-btn{
+	font-family: 'Josefin Sans', sans-serif;
+	font-weight: 600;
+}
+
+.jumbotron {
+	background: url(../images/coffee-cta.jpg) no-repeat;
+	background-size: 100% auto;
+}
+
+.navbar {
+	position: relative;
+	background-color: #B5ABA3;
+	min-height: 50px;
+	padding: 35px;
+	margin-bottom: 0;
+	border: 0;
+	border-radius: 0;
+}
+
+.navbar-brand {
+  float: left;
+  height: 50px;
+  padding: 0;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	border-bottom: 3px solid #663451;
+	color: #663451;
+}
+
+.navbar-default .navbar-nav > li > a{
+	color: #38281E;
+	font-weight: 600;
+	font-size: 16px;
+}
+
+.jumbotron h1, .jumbotron h3 {
+	color: #fff;
+}
+
+.my-btn{
+	background-color: #E89C30;
+	color: #fff;
+	display: inline-block;
+	padding: 8px 8px;
+	margin-bottom: 0;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+  		-ms-touch-action: manipulation;
+     	touch-action: manipulation;
+  	cursor: pointer;
+  		-webkit-user-select: none;
+     	-moz-user-select: none;
+      	-ms-user-select: none;
+          	user-select: none;
+	 border: 10px solid transparent;
+}
+
+.my-btn:hover{
+	background-color: #E5AD6A;
+	border: 10px solid #E89C30;
+	color: #fff;
+	display: inline-block;
+	padding: 8px 8px;
+	margin-bottom: 0;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+  		-ms-touch-action: manipulation;
+     	touch-action: manipulation;
+  	cursor: pointer;
+  		-webkit-user-select: none;
+     	-moz-user-select: none;
+      	-ms-user-select: none;
+          	user-select: none;
+}
+
+.my-btn:active{
+	background-color: #fff;
+	border: 10px solid #E89C30;
+	color: #E89C30;
+	display: inline-block;
+	padding: 8px 8px;
+	margin-bottom: 0;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+  		-ms-touch-action: manipulation;
+     	touch-action: manipulation;
+  	cursor: pointer;
+  		-webkit-user-select: none;
+     	-moz-user-select: none;
+      	-ms-user-select: none;
+          	user-select: none;
+}
+
+.cta-box img{
+	display: table;
+	margin: 0 auto;
+	padding-bottom: 10px;
+}
+.cta-box{
+	padding: 30px;
+}
+
+.cta-box p{
+	color: #fff;
+	text-align: center;
+}
+
+.cta-out{
+	background-color: #663451;
+}
+
+.cta-in{
+	background-color: #A48B7A;
+}
+
+#cta-info{
+	margin-top: -30px;
+}
+
+#footer{
+	background-color: #B5ABA3;
+	padding: 30px;
+	list-style-type: none;
+}
+
+#footer a, .nav a{
+	color: #38281E;
+}
+
+#footer li{
+	padding: 10px 0;
+}
