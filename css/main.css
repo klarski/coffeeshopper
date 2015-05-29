@@ -6,7 +6,7 @@ body {
   background-color: #fff;
 }
 
-a, .my-btn{
+h1 ,h2, h3, h4, h5, a, .my-btn{
 	font-family: 'Josefin Sans', sans-serif;
 	font-weight: 600;
 }
@@ -68,12 +68,12 @@ a, .my-btn{
      	-moz-user-select: none;
       	-ms-user-select: none;
           	user-select: none;
-	 border: 10px solid transparent;
+	 border: 8px solid transparent;
 }
 
 .my-btn:hover{
 	background-color: #E5AD6A;
-	border: 10px solid #E89C30;
+	border: 8px solid #E89C30;
 	color: #fff;
 	display: inline-block;
 	padding: 8px 8px;
@@ -95,7 +95,7 @@ a, .my-btn{
 
 .my-btn:active{
 	background-color: #fff;
-	border: 10px solid #E89C30;
+	border: 8px solid #E89C30;
 	color: #E89C30;
 	display: inline-block;
 	padding: 8px 8px;
@@ -153,4 +153,15 @@ a, .my-btn{
 
 #footer li{
 	padding: 10px 0;
+}
+
+.bright-brown{
+	background-color: #A48B7A;
+}
+.purple{
+	background-color: #663451;
+}
+
+.section-padding{
+	padding:30px 0;
 }
