@@ -11,6 +11,19 @@
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+      function initialize() {
+        var mapCanvas = document.getElementById('map-canvas');
+        var mapOptions = {
+          center: new google.maps.LatLng(33.750302, -84.387302),
+          zoom: 12,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions)
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,6 +50,40 @@
       </div>
     </nav>
 
+    <div class="bright-brown map">
+      <div class="container">
+        <h1 class="white-text">ATLANTA</h1>
+        <div id="map-canvas">
+        </div>
+      </div>
+    </div>
+
+    <div class="purple list-view">
+      <div class="container">
+
+        <div class="shop-list">
+          <h2>SHOP NAME</h2>
+          <p>123 Main Street</p>
+          <p>404-223-5678</p>
+          <button class="my-btn">READ MORE</button>
+        </div>
+
+        <div class="shop-list">
+          <h2>SHOP NAME</h2>
+          <p>123 Main Street</p>
+          <p>404-223-5678</p>
+          <button class="my-btn">READ MORE</button>
+        </div>
+
+        <div class="shop-list">
+          <h2>SHOP NAME</h2>
+          <p>123 Main Street</p>
+          <p>404-223-5678</p>
+          <button class="my-btn">READ MORE</button>
+        </div>
+
+      </div>
+    </div>
   
 
     <div class="row" id="footer">

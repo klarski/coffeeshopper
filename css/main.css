@@ -180,24 +180,66 @@ h1 ,h2, h3, h4, h5, a, .my-btn{
 }
 
 .city{  
+	margin: 20px;
     float:left; 
     position:relative;
 }  
 .city-title{  
     position:absolute; 
-    bottombottom:0px; /* position will be on bottom */  
-    margin-top: -50px;
-    left:0px;  
+    margin-top: -68px;
     width:100%;  
-    /* styling bellow */  
     background-color:#E89C30;  
     font-size:15px;  
     color:white;  
+} 
+
+.city img:hover{  
+	background-color: #E89C30;
+	opacity: 0.6;
 }  
-h1.title_content{  
+
+h2.title_content{  
 	text-align: center;
-    padding:15px;  
+    padding:18px;  
     margin:0px;  
 }  
+
+
+ #map-canvas {
+ 	margin: 0 auto;
+    width: 100%;
+    height: 400px;
+    background-color: #CCC;
+  }
+
+  .map{
+  	padding-top: 30px;
+  	padding-bottom: 60px;
+  }
+
+  .shop-list{
+  	width: 30%;
+  	background-color: #B5ABA3;
+  	margin: 15px;
+  	padding: 10px;
+  	float: left;
+  }
+
+  .list-view{
+  	padding: 30px 0;
+  }
+
+ .shop-list h2{
+ 	border-bottom: 2px #663451 solid;
+ 	padding: 5px;
+ }
+
+ .shop-list p, .shop-list h2 {
+ 	text-align: center;
+ }
+
+ .shop-list button{
+ 	margin: 0 23%;
+ }
 
 
