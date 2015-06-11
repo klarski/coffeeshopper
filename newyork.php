@@ -1,3 +1,9 @@
+<?php
+$user="root";
+$pass="root";
+$dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -61,26 +67,20 @@
     <div class="purple list-view">
       <div class="container">
 
-        <div class="shop-list">
-          <h2>SHOP NAME</h2>
-          <p>123 Main Street</p>
-          <p>404-223-5678</p>
-          <button class="my-btn">READ MORE</button>
-        </div>
+        <?php
+        $stmt = $dbh->prepare('SELECT * FROM shops WHERE (cityId=2 AND statusId=1);');
+        $stmt->execute();
+        $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
-        <div class="shop-list">
-          <h2>SHOP NAME</h2>
-          <p>123 Main Street</p>
-          <p>404-223-5678</p>
-          <button class="my-btn">READ MORE</button>
-        </div>
-
-        <div class="shop-list">
-          <h2>SHOP NAME</h2>
-          <p>123 Main Street</p>
-          <p>404-223-5678</p>
-          <button class="my-btn">READ MORE</button>
-        </div>
+        foreach  ($result as $row) {
+            echo '<div class="shop-list">';
+            echo '<h2>'.$row['shop_name'].'</h2>';
+            echo '<p>'.$row['shop_location'].'</p>';
+            echo '<p>'.$row['phone_number'].'</p>';
+            echo '<a href="shop.html"><button class="my-btn">READ MORE</button></a>';
+            echo '</div>';
+        }
+        ?>
 
       </div>
     </div>

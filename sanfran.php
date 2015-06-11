@@ -1,3 +1,9 @@
+<?php
+$user="root";
+$pass="root";
+$dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,6 +17,19 @@
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+      function initialize() {
+        var mapCanvas = document.getElementById('map-canvas');
+        var mapOptions = {
+          center: new google.maps.LatLng(37.775341, -122.419061),
+          zoom: 12,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions)
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,34 +56,35 @@
       </div>
     </nav>
 
-    <div class="purple" id="login">
-    <div class="container">
-      <h1 class="white-text">SIGN UP</h1>
-      <form>
-        <div class="form-group">
-          <label class="white-text" for="exampleInputEmail1">FIRST NAME</label>
-          <input type="fname" class="form-control" id="exampleInputEmail1" placeholder="Enter first name" required/>
+    <div class="bright-brown map">
+      <div class="container">
+        <h1 class="white-text">SAN FRANCISCO</h1>
+        <div id="map-canvas">
         </div>
-        <div class="form-group">
-          <label class="white-text" for="exampleInputEmail1">LAST NAME</label>
-          <input type="lname" class="form-control" id="exampleInputEmail1" placeholder="Enter last name" required/>
-        </div>
-        <div class="form-group">
-          <label class="white-text" for="exampleInputEmail1">EMAIL ADDRESS</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required/>
-        </div>
-        <div class="form-group">
-          <label class="white-text" for="exampleInputPassword1">PASSWORD</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required/>
-        </div>
-        <div class="form-group">
-          <label class="white-text" for="exampleInputPassword1">RETYPE PASSWORD</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required/>
-        </div>
-        <button type="submit" class="my-btn">SIGN ME UP</button>
-      </form>
+      </div>
     </div>
-  </div>
+
+    <div class="purple list-view">
+      <div class="container">
+
+        <?php
+        $stmt = $dbh->prepare('SELECT * FROM shops WHERE (cityId=3 AND statusId=1);');
+        $stmt->execute();
+        $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+        foreach  ($result as $row) {
+            echo '<div class="shop-list">';
+            echo '<h2>'.$row['shop_name'].'</h2>';
+            echo '<p>'.$row['shop_location'].'</p>';
+            echo '<p>'.$row['phone_number'].'</p>';
+            echo '<a href="shop.html"><button class="my-btn">READ MORE</button></a>';
+            echo '</div>';
+        }
+        ?>
+
+      </div>
+    </div>
+  
 
     <div class="row" id="footer">
       <div class="col-md-9">

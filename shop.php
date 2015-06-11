@@ -1,3 +1,18 @@
+<?php
+
+$user="root";
+$pass="root";
+$dbh = new PDO('mysql:host=localhost;dbname=SSL;port=8889', $user, $pass);
+
+$id=$_GET['shopId'];
+$stmt=$dbh->prepare("SELECT * FROM shops WHERE shopId = :shopId");
+$stmt->bindParam(':shopId', $id);
+$stmt->execute();
+$result = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,6 +26,21 @@
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    
+    <!-- Add mousewheel plugin (this is optional) -->
+    <script type="text/javascript" src="/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+    <!-- Add fancyBox -->
+    <link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+    <!-- Optionally add helpers - button, thumbnail and/or media -->
+    <link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+    <script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+
+    <link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,7 +70,9 @@
 
     <div class="bright-brown" id="shop-details">
       <div class="container">
-        <h1 class="col-md-5">OCTAINE COFFEE</h1>
+        <?php
+        echo '<h1 class="col-md-5">'.$row['shop_name'].'</h1>';
+        ?>
         <div class="col-md-6 col-md-offset-1">
         <button class="my-btn">EDIT SHOP INFO</button>
         <a href="atlanta.html"><button class="my-btn">BACK TO ATLANTA</button></a>
@@ -103,10 +135,13 @@
 </div>
   <div class="purple" id="image-gallery">
     <div class="container section-padding">
-      <h3 class="white-text">IMAGE GALLERY</h3>
-      <img width="300" src="images/octane1.jpg">
-      <img width="300" src="images/octane2.jpg">
-      <img width="300" src="images/octane3.jpg">
+      <h2 class="white-text col-md-4">IMAGE GALLERY</h2>
+      <button class="col-md-2 col-md-offset-5 my-btn">ADD AN IMAGE</button>
+      <div class="row col-md-12 ">
+        <a class="fancybox" rel="group" href="images/octane1.jpg"><img src="images/octane1.jpg" alt=""/></a>
+        <a class="fancybox" rel="group" href="images/octane2.jpg"><img width="300" src="images/octane2.jpg"></a>
+        <a class="fancybox" rel="group" href="images/octane3.jpg"><img width="300" src="images/octane3.jpg"></a>
+      </div>
     </div>
   </div>
 
@@ -141,8 +176,12 @@
       <button class="col-md-2 my-btn" onClick="window.location.href='admin.html'">ADMIN LOGIN</button>
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".fancybox").fancybox();
+  });
+</script>
+    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
   </body>

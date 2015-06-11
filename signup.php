@@ -1,3 +1,25 @@
+
+<?php
+$user="root";
+$pass="root";
+$dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
+$stmt = $dbh->prepare('select * from users;');
+if ($_SERVER['REQUEST_METHOD']=='POST') {
+  $firstname=$_POST['firstname']; //get POST values
+  $lastname=$_POST['lastname'];
+  $email=$_POST['email'];
+  $username=$_POST['username'];
+  $password=$_POST['password'];
+  $stmt=$dbh->prepare('INSERT INTO users(firstname, lastname, email, username, password) values(:firstname, :lastname, :email, :username, :password);');
+  $stmt->bindParam(':firstname',$firstname);
+  $stmt->bindParam(':lastname',$lastname);
+  $stmt->bindParam(':email',$email);
+  $stmt->bindParam(':username',$username);
+  $stmt->bindParam(':password',$password);
+  $stmt->execute();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,19 +33,6 @@
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script>
-      function initialize() {
-        var mapCanvas = document.getElementById('map-canvas');
-        var mapOptions = {
-          center: new google.maps.LatLng(33.750302, -84.387302),
-          zoom: 12,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-        var map = new google.maps.Map(mapCanvas, mapOptions)
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,41 +59,34 @@
       </div>
     </nav>
 
-    <div class="bright-brown map">
-      <div class="container">
-        <h1 class="white-text">ATLANTA</h1>
-        <div id="map-canvas">
+    <div class="purple" id="login">
+    <div class="container">
+      <h1 class="white-text">SIGN UP</h1>
+      <form enctype="multipart/form-data" action="signup-complete.html" method="POST">
+        <div class="form-group">
+          <label class="white-text" for="firstname">FIRST NAME</label>
+          <input type="firstname" class="form-control" id="firstname" name="firstname" placeholder="Enter first name" required/>
         </div>
-      </div>
+        <div class="form-group">
+          <label class="white-text" for="lastname">LAST NAME</label>
+          <input type="lastname" class="form-control" id="lastname"  name="lastname"  placeholder="Enter last name" required/>
+        </div>
+        <div class="form-group">
+          <label class="white-text" for="email">EMAIL ADDRESS</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required/>
+        </div>
+        <div class="form-group">
+          <label class="white-text" for="username">USERNAME</label>
+          <input type="username" class="form-control" id="username" name="username" placeholder="Enter username" required/>
+        </div>
+        <div class="form-group">
+          <label class="white-text" for="password">PASSWORD</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required/>
+        </div>
+        <button type="submit" class="my-btn">SIGN ME UP</button>
+      </form>
     </div>
-
-    <div class="purple list-view">
-      <div class="container">
-
-        <div class="shop-list">
-          <h2>SHOP NAME</h2>
-          <p>123 Main Street</p>
-          <p>404-223-5678</p>
-          <a href="shop.html"><button class="my-btn">READ MORE</button></a>
-        </div>
-
-        <div class="shop-list">
-          <h2>SHOP NAME</h2>
-          <p>123 Main Street</p>
-          <p>404-223-5678</p>
-          <button class="my-btn">READ MORE</button>
-        </div>
-
-        <div class="shop-list">
-          <h2>SHOP NAME</h2>
-          <p>123 Main Street</p>
-          <p>404-223-5678</p>
-          <button class="my-btn">READ MORE</button>
-        </div>
-
-      </div>
-    </div>
-  
+  </div>
 
     <div class="row" id="footer">
       <div class="col-md-9">

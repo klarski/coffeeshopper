@@ -1,3 +1,10 @@
+<?php
+$user="root";
+$pass="root";
+$dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,7 +23,7 @@
       function initialize() {
         var mapCanvas = document.getElementById('map-canvas');
         var mapOptions = {
-          center: new google.maps.LatLng(37.775341, -122.419061),
+          center: new google.maps.LatLng(33.750302, -84.387302),
           zoom: 12,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
@@ -52,7 +59,7 @@
 
     <div class="bright-brown map">
       <div class="container">
-        <h1 class="white-text">SAN FRANCISCO</h1>
+        <h1 class="white-text">ATLANTA</h1>
         <div id="map-canvas">
         </div>
       </div>
@@ -61,27 +68,21 @@
     <div class="purple list-view">
       <div class="container">
 
-        <div class="shop-list">
-          <h2>SHOP NAME</h2>
-          <p>123 Main Street</p>
-          <p>404-223-5678</p>
-          <button class="my-btn">READ MORE</button>
-        </div>
+        
+        <?php
+        $stmt = $dbh->prepare('SELECT * FROM shops WHERE (cityId=1 AND statusId=1);');
+        $stmt->execute();
+        $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
-        <div class="shop-list">
-          <h2>SHOP NAME</h2>
-          <p>123 Main Street</p>
-          <p>404-223-5678</p>
-          <button class="my-btn">READ MORE</button>
-        </div>
-
-        <div class="shop-list">
-          <h2>SHOP NAME</h2>
-          <p>123 Main Street</p>
-          <p>404-223-5678</p>
-          <button class="my-btn">READ MORE</button>
-        </div>
-
+        foreach  ($result as $row) {
+            echo '<div class="shop-list">';
+            echo '<h2>'.$row['shop_name'].'</h2>';
+            echo '<p>'.$row['shop_location'].'</p>';
+            echo '<p>'.$row['phone_number'].'</p>';
+            echo '<a href="shop.php"><button class="my-btn">READ MORE</button></a>';
+            echo '</div>';
+        }
+        ?>
       </div>
     </div>
   
