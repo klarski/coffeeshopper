@@ -47,11 +47,11 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="cities.html">CITIES</a></li>
-          <li><a href="signup.html">SIGN UP</a></li>
-          <li><a href="login.html">LOGIN</a></li>
+          <li><a href="index.php">HOME</a></li>
+          <li><a href="about.php">ABOUT</a></li>
+          <li><a href="cities.php">CITIES</a></li>
+          <li><a href="signup.php">SIGN UP</a></li>
+          <li><a href="login.php">LOGIN</a></li>
         </ul>
       </div>
     </nav>
@@ -67,6 +67,7 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
     <div class="purple list-view">
       <div class="container">
 
+        
         <?php
         $stmt = $dbh->prepare('SELECT * FROM shops WHERE (cityId=3 AND statusId=1);');
         $stmt->execute();
@@ -77,11 +78,11 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
             echo '<h2>'.$row['shop_name'].'</h2>';
             echo '<p>'.$row['shop_location'].'</p>';
             echo '<p>'.$row['phone_number'].'</p>';
-            echo '<a href="shop.html"><button class="my-btn">READ MORE</button></a>';
+            echo '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
             echo '</div>';
         }
-        ?>
 
+        ?>
       </div>
     </div>
   

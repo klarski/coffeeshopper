@@ -28,33 +28,58 @@
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="cities.html">CITIES</a></li>
-          <li><a href="signup.html">SIGN UP</a></li>
-          <li><a href="login.html">LOGIN</a></li>
+          <li><a href="index.php">HOME</a></li>
+          <li><a href="about.php">ABOUT</a></li>
+          <li><a href="cities.php">CITIES</a></li>
+          <li><a href="signup.php">SIGN UP</a></li>
+          <li><a href="login.php">LOGIN</a></li>
         </ul>
       </div>
     </nav>
 
-  <div class="purple" id="login">
+  <div class="purple" id="cities-section">
     <div class="container">
-      <h1 class="white-text">ADMIN LOGIN</h1>
-      <form>
-        <div class="form-group">
-          <label class="white-text" for="exampleInputEmail1">EMAIL ADDRESS</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required/>
-        </div>
-        <div class="form-group">
-          <label class="white-text" for="exampleInputPassword1">PASSWORD</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required/>
-        </div>
-        <button type="submit" class="my-btn">SUBMIT</button>
-      </form>
-    </div>
-  </div>
-  
+      <h1 class="white-text">CITIES</h1>
 
+      <div class="row">
+      <div>
+        <div class="city">
+          <a href="atlanta.php"><img src="images/atl.jpg"></a>
+          <div class="city-title">
+            <h2 class="title_content">ATLANTA</h2>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="city">
+         <a href="newyork.php"><img src="images/nyc.png"></a>
+          <div class="city-title">
+              <h2 class="title_content">NEW YORK</h2>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="city">
+          <a href="sanfran.php"><img src="images/sf.jpg"></a>
+            <div class="city-title">
+              <h2 class="title_content">SAN FRANCISCO</h2>
+            </div>
+        </div>
+      </div>
+      </div>
+
+      <div>
+        <div class="box-btn">
+          <h2>REQUEST A CITY</h2>
+        </div>
+      </div>
+    </div>
+
+    </div>
+   </div>
+  
     <div class="row" id="footer">
       <div class="col-md-9">
       <li><a href="index.html">HOME</a></li>

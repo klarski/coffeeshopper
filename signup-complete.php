@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,25 +29,22 @@
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="cities.html">CITIES</a></li>
-          <li><a href="signup.html">SIGN UP</a></li>
-          <li><a href="login.html">LOGIN</a></li>
+          <li><a href="index.php">HOME</a></li>
+          <li><a href="about.php">ABOUT</a></li>
+          <li><a href="cities.php">CITIES</a></li>
+          <li><a href="signup.php">SIGN UP</a></li>
+          <li><a href="login.php">LOGIN</a></li>
         </ul>
       </div>
     </nav>
 
-      <div id="about" class="purple row">
-        <img class="col-md-6" src="images/about.jpg" width="100%">
-        <div class="white-text container ">
-          <h1>ABOUT</h1>
-          <p>Coffee as coffee, con panna, seasonal mazagran blue mountain dark organic. Ut java percolator, foam caffeine, pumpkin spice cinnamon viennese froth plunger pot viennese. Decaffeinated macchiato, crema aged id acerbic cortado blue mountain froth.</p>
-          <p>Doppio kopi-luwak, coffee milk trifecta milk cream est caffeine. Latte, black dripper café au lait brewed blue mountain and strong. Cappuccino con panna body decaffeinated pumpkin spice doppio fair trade, single shot that instant viennese kopi-luwak.</p>
-          <p>French press, sugar, steamed, robusta cappuccino ut and variety flavour brewed frappuccino froth. Aged, froth flavour acerbic instant dripper cortado lungo. Flavour, extra crema irish cup con panna and half and half.</p>
-          <p>Sit aromatic, doppio, aromatic frappuccino decaffeinated steamed java. Extraction cortado, cappuccino, trifecta robust arabica aromatic trifecta java. Mazagran, body, whipped shop viennese coffee macchiato.</p>
-        </div>
+    <div class="purple" id="thnx">
+      <div class="container">
+      <h1>Thanks for signing up!</h1>
+      <h3>Login to start leaving reviews and posting new coffee shops.</h3>
+      <button class="col-md-2 my-btn" onClick="window.location.href='login.html'">LOGIN</button>
     </div>
+  </div>
 
     <div class="row" id="footer">
       <div class="col-md-9">

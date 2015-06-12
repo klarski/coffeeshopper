@@ -42,7 +42,7 @@ echo "Invalid Login Credentials.";
 //3.1.4 if the user is logged in Greets the user with message
 if (isset($_SESSION['username'])){
 $username = $_SESSION['username'];
-echo "Hi " . $username . " ";
+echo "Hi ".$username." ";
 echo "This is the Members Area";
 }
 ?>
@@ -77,11 +77,11 @@ echo "This is the Members Area";
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="cities.html">CITIES</a></li>
-          <li><a href="signup.html">SIGN UP</a></li>
-          <li><a href="login.html">LOGIN</a></li>
+          <li><a href="index.php">HOME</a></li>
+          <li><a href="about.php">ABOUT</a></li>
+          <li><a href="cities.php">CITIES</a></li>
+          <li><a href="signup.php">SIGN UP</a></li>
+          <li><a href="login.php">LOGIN</a></li>
         </ul>
       </div>
     </nav>
@@ -89,7 +89,7 @@ echo "This is the Members Area";
   <div class="purple" id="login">
     <div class="container">
       <h1 class="white-text">LOGIN</h1>
-      <form  action="login-home.html" method="POST">
+      <form  action="shop.php" method="POST">
         <div class="form-group">
           <label class="white-text" for="exampleInputEmail1">USERNAME</label>
           <input type="text" class="form-control" id="username" name="username" placeholder="Enter email" required/>
@@ -98,7 +98,7 @@ echo "This is the Members Area";
           <label class="white-text" for="exampleInputPassword1">PASSWORD</label>
           <input type="password" class="form-control" id="password" name="password" placeholder="Password" required/>
         </div>
-        <button type="submit" onClick="window.location.href='register.php'" class="my-btn">SUBMIT</button>
+        <button type="submit" class="my-btn">SUBMIT</button>
       </form>
     </div>
   </div>

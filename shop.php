@@ -2,13 +2,21 @@
 
 $user="root";
 $pass="root";
-$dbh = new PDO('mysql:host=localhost;dbname=SSL;port=8889', $user, $pass);
+$dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 
-$id=$_GET['shopId'];
-$stmt=$dbh->prepare("SELECT * FROM shops WHERE shopId = :shopId");
-$stmt->bindParam(':shopId', $id);
-$stmt->execute();
-$result = $stmt->fetchall(PDO::FETCH_ASSOC);
+$id=$_GET['id'];
+$name=$_GET['name'];
+$name= strtoupper($name)
+
+
+// $stmt = $dbh->prepare('SELECT * FROM shops WHERE shopId=$id;');
+// $stmt->execute();
+// $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+// // echo var_dump($result[0]);
+
+// foreach($_GET as $key=>$value){
+//  echo $key, ' => ', $value, "<br/>";
+// }
 
 ?>
 
@@ -26,6 +34,8 @@ $result = $stmt->fetchall(PDO::FETCH_ASSOC);
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     
     <!-- Add mousewheel plugin (this is optional) -->
     <script type="text/javascript" src="/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
@@ -58,11 +68,11 @@ $result = $stmt->fetchall(PDO::FETCH_ASSOC);
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="cities.html">CITIES</a></li>
-          <li><a href="signup.html">SIGN UP</a></li>
-          <li><a href="login.html">LOGIN</a></li>
+          <li><a href="index.php">HOME</a></li>
+          <li><a href="about.php">ABOUT</a></li>
+          <li><a href="cities.php">CITIES</a></li>
+          <li><a href="signup.php">SIGN UP</a></li>
+          <li><a href="login.php">LOGIN</a></li>
         </ul>
       </div>
     </nav>
@@ -71,7 +81,7 @@ $result = $stmt->fetchall(PDO::FETCH_ASSOC);
     <div class="bright-brown" id="shop-details">
       <div class="container">
         <?php
-        echo '<h1 class="col-md-5">'.$row['shop_name'].'</h1>';
+        echo '<h1 class="col-md-5">'.$name.'</h1>';
         ?>
         <div class="col-md-6 col-md-offset-1">
         <button class="my-btn">EDIT SHOP INFO</button>
@@ -81,14 +91,31 @@ $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
   <div class="container">
     
-    <div class="purple col-md-5 white-text">      
-      <h3>Location:</h3>
-      <p>1009-B Marietta St.</p>
+    <div class="purple col-md-5 white-text">
+      <?php
+      $id=$_GET['id'];
+      $stmt = $dbh->prepare('SELECT * FROM shops WHERE shopId=:id;');
+      $stmt->bindParam(':id',$id);
+      $stmt->execute();
+      $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
-      <h3>Hours:</h3>
-      <p>Monday-Thursday: 7am - 11pm</br>
-      Friday: 7am - 12am</br>
-      Saturday &amp; Sunday: 8am - 11pm</p>
+        foreach  ($result as $row) {
+            echo '<h3>LOCATION:</h3>';
+            echo '<p>'.$row['shop_location'].'</p>';
+            echo '<p>'.$row['phone_number'].'</p>';  
+        }
+      $stmt = $dbh->prepare('SELECT * FROM shop_hours WHERE shopId=:id;');
+      $stmt->bindParam(':id',$id);
+      $stmt->execute();
+      $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+        echo '<h3>HOURS:</h3>';
+        foreach  ($result as $row) {
+            echo '<p>'.$row['day_of_week'].' :  '.$row['time_open'].' - '.$row['time_closed'].'</p>'; 
+        }
+
+        ?>     
+<!-- 
       <h3>Methods of Brewing:</h3>
       <ul class="list-inline list-unstyled">
         <li><span class="glyphicon glyphicon-tint"></span>Drip</li>
@@ -100,39 +127,30 @@ $result = $stmt->fetchall(PDO::FETCH_ASSOC);
         <li><span class="glyphicon glyphicon-tint"></span>Chemex</li>
         <li><span class="glyphicon glyphicon-tint"></span>Cold Brew</li>
       </ul>
-    </div>
+ -->    </div>
 
-    <div class="col-md-7">
-      <div class="blend">
-        <img class="thumbnail col-md-2"src="images/beans.jpg">
-          <div class="caption col-md-9 col-md-offset-1">
-          <p><strong>BRAZIL DATERRA</strong></p>
-          <p>A favorite coffee from one of the finest coffee estates in Brazil. A smooth, balanced coffee with hints of caramel and citrus.</p>
-        </div>
-      </div>
-    </div>
+    
+      
+      <?php
+      $id=$_GET['id'];
+      $stmt = $dbh->prepare('SELECT * FROM blends WHERE shopId=:id;');
+      $stmt->bindParam(':id',$id);
+      $stmt->execute();
+      $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
-    <div class="col-md-7">
-      <div class="blend">
-        <img class="thumbnail col-md-2"src="images/beans.jpg">
-          <div class="caption col-md-9 col-md-offset-1">
-          <p><strong>EL SALVADOR, SANTA ELENA</strong></p>
-          <p>Single origin coffee with hints of brown sugar, apricot, fig, blackberry, and cocoa nib.</p>
-        </div>
-      </div>
-    </div>
+        foreach  ($result as $row) {
+            echo '<div class="col-md-7"><div class="blend">';
+            echo '<img class="thumbnail col-md-2"src="images/beans.jpg">';
+            echo '<p><strong>'.$row['blend_name'].'</strong></p>';
+            echo '<p>'.$row['blend_desc'].'</p>';
+            echo '</div></div>'; 
+        }
 
-    <div class="col-md-7">
-      <div class="blend">
-        <img class="thumbnail col-md-2"src="images/beans.jpg">
-          <div class="caption col-md-9 col-md-offset-1">
-          <p><strong>FRANKLIN GARBANZO ESTATE</strong></p>
-          <p>Flavors of sparkling, juicy grapes and stone fruit brought to you from La Violeta, Costa Rica.</p>
-        </div>
-      </div>
+        ?>  
     </div>
   </div>
 </div>
+
   <div class="purple" id="image-gallery">
     <div class="container section-padding">
       <h2 class="white-text col-md-4">IMAGE GALLERY</h2>
@@ -150,16 +168,51 @@ $result = $stmt->fetchall(PDO::FETCH_ASSOC);
   <div class="container">
     <div class="clearfix col-md-12 section-padding">
       <div class="row divider">
-        <h3>REVIEWS</h3>
+      <h2 class="white-text">REVIEWS</h2>
+      <?php
+      $id=$_GET['id'];
+      $stmt = $dbh->prepare('SELECT * FROM reviews WHERE shopId=:id;');
+      $stmt->bindParam(':id',$id);
+      $stmt->execute();
+      $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+        foreach  ($result as $row) {
+
+          if ($row['taste_rating'] > 4) {
+              echo '<h3>TASTE</h3><img src="images/5star.png">';
+          } elseif ($row['taste_rating'] > 3) {
+              echo '<h3>TASTE</h3><img src="images/4star.png">';
+          } elseif ($row['taste_rating'] > 2) {
+              echo '<h3>TASTE</h3><img src="images/3star.png">';
+          } elseif ($row['taste_rating'] > 1) {
+              echo '<h3 class="white-text">TASTE</h3><img src="images/2star.png">';
+          } else {
+              echo '<h3 class="white-text">TASTE:</h3><img src="images/2star.png">';
+          };
+
+          if ($row['atmos_rating'] > 4) {
+              echo '<h3>ATMOSPHERE</h3><img src="images/5star.png">';
+          } elseif ($row['atmos_rating'] > 3) {
+              echo '<h3>ATMOSPHERE</h3><img src="images/4star.png">';
+          } elseif ($row['atmos_rating'] > 2) {
+              echo '<h3>ATMOSPHERE</h3><img src="images/3star.png">';
+          } elseif ($row['atmos_rating'] > 1) {
+              echo '<h3>ATMOSPHERE</h3><img src="images/2star.png">';
+          } else {
+              echo '<h3>ATMOSPHERE</h3><img src="images/2star.png">';
+          };
+          echo '<p>'.$row['review'].'</p>'; 
+        }
+      ?>
       </div>
-      <div>
+      <!-- <div>
       <h4>Taste <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></h4>
       </div>
       <div>
       <h4>Atmosphere <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></h4>
       </div>
       <p>Macaroon caramels topping gummi bears brownie sugar plum liquorice pastry. Cake tiramisu sweet cake cupcake. Tart icing sweet roll cotton candy powder gummies. Wafer gingerbread cake carrot cake caramels dragée macaroon cupcake croissant. Pastry macaroon jelly-o. Bonbon sweet roll icing dessert liquorice oat cake jelly-o. Powder ice cream cake muffin powder caramels tootsie roll icing pudding.</p>
-    </div>
+    </div> -->
   </div>
 </div>
 
@@ -167,13 +220,13 @@ $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
     <div class="row" id="footer">
       <div class="col-md-9">
-      <li><a href="index.html">HOME</a></li>
-      <li><a href="about.html">ABOUT</a></li>
-      <li><a href="cities.html">CITIES</a></li> 
-      <li><a href="signup.html">SIGN UP</a></li>
-      <li><a href="login.html">LOGIN</a></li>
+      <li><a href="index.php">HOME</a></li>
+      <li><a href="about.php">ABOUT</a></li>
+      <li><a href="cities.php">CITIES</a></li>
+      <li><a href="signup.php">SIGN UP</a></li>
+      <li><a href="login.php">LOGIN</a></li>
       </div>
-      <button class="col-md-2 my-btn" onClick="window.location.href='admin.html'">ADMIN LOGIN</button>
+      <button class="col-md-2 my-btn" onClick="window.location.href='admin.php'">ADMIN LOGIN</button>
     </div>
 
 <script type="text/javascript">

@@ -28,11 +28,11 @@
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="cities.html">CITIES</a></li>
-          <li><a href="signup.html">SIGN UP</a></li>
-          <li><a href="login.html">LOGIN</a></li>
+          <li><a href="index.php">HOME</a></li>
+          <li><a href="about.php">ABOUT</a></li>
+          <li><a href="cities.php">CITIES</a></li>
+          <li><a href="signup.php">SIGN UP</a></li>
+          <li><a href="login.php">LOGIN</a></li>
         </ul>
       </div>
     </nav>
@@ -84,11 +84,11 @@
 
     <div class="row" id="footer">
       <div class="col-md-9">
-      <li><a href="index.html">HOME</a></li>
-      <li><a href="about.html">ABOUT</a></li>
-      <li><a href="cities.html">CITIES</a></li> 
-      <li><a href="signup.html">SIGN UP</a></li>
-      <li><a href="login.html">LOGIN</a></li>
+      <li><a href="index.php">HOME</a></li>
+      <li><a href="about.php">ABOUT</a></li>
+      <li><a href="cities.php">CITIES</a></li>
+      <li><a href="signup.php">SIGN UP</a></li>        
+      <li><a href="login.php">LOGIN</a></li>
       </div>
       <button class="col-md-2 my-btn" onClick="window.location.href='admin.html'">ADMIN LOGIN</button>
     </div>
