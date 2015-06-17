@@ -61,9 +61,9 @@ $name= strtoupper($name)
   </head>
   <body>
     <nav class="navbar navbar-default">
-      <div class="container-fluid">
+      <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="index.php">
             <img alt="Brand" width="250" height="auto" src="images/logo.png">
           </a>
         </div>
@@ -80,18 +80,19 @@ $name= strtoupper($name)
 
     <div class="bright-brown" id="shop-details">
       <div class="container">
+        <div class="row">
         <?php
-        echo '<h1 class="col-md-5">'.$name.'</h1>';
+        echo '<h1 class="col-md-7 white-text">'.$name.'</h1>';
         ?>
-        <div class="col-md-6 col-md-offset-1">
-        <button class="my-btn">EDIT SHOP INFO</button>
-        <a href="atlanta.html"><button class="my-btn">BACK TO ATLANTA</button></a>
-      </div>
+        <div class="row col-md-offset-3">
+        <button class="my-btn various fancybox.ajax" href='editshop.php'>EDIT SHOP INFO</button>
+        <button class="my-btn" onClick="window.location.href='atlanta.php'">BACK TO ATLANTA</button>
+        </div>
+      </div>   
     </div>
 
   <div class="container">
-    
-    <div class="purple col-md-5 white-text">
+    <div class="purple details-box col-md-5 white-text">
       <?php
       $id=$_GET['id'];
       $stmt = $dbh->prepare('SELECT * FROM shops WHERE shopId=:id;');
@@ -100,9 +101,9 @@ $name= strtoupper($name)
       $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
         foreach  ($result as $row) {
-            echo '<h3>LOCATION:</h3>';
-            echo '<p>'.$row['shop_location'].'</p>';
-            echo '<p>'.$row['phone_number'].'</p>';  
+            echo '<p>'.$row['shop_location'].'</br>';
+            echo '<p>'.$row['phone_number'].'</br>';
+            echo '<a href="'.$row['website'].'">'.$row['website'].'</a></p>';  
         }
       $stmt = $dbh->prepare('SELECT * FROM shop_hours WHERE shopId=:id;');
       $stmt->bindParam(':id',$id);
@@ -113,24 +114,24 @@ $name= strtoupper($name)
         foreach  ($result as $row) {
             echo '<p>'.$row['day_of_week'].' :  '.$row['time_open'].' - '.$row['time_closed'].'</p>'; 
         }
+      $stmt = $dbh->prepare('SELECT * FROM brew_methods WHERE shopId=:id;');
+      $stmt->bindParam(':id',$id);
+      $stmt->execute();
+      $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+        echo '<h3>METHODS OF BREWING:</h3>';
+        foreach  ($result as $row) {
+            echo '<ul class="list-inline list-unstyled">';
+            echo '<li><span class="glyphicon glyphicon-tint"></span>'.$row['brew_type'].'</li>';
+            echo '</ul>';
+        }
 
         ?>     
-<!-- 
-      <h3>Methods of Brewing:</h3>
-      <ul class="list-inline list-unstyled">
-        <li><span class="glyphicon glyphicon-tint"></span>Drip</li>
-        <li><span class="glyphicon glyphicon-tint"></span>Espresso</li>
-        <li><span class="glyphicon glyphicon-tint"></span>Pour Over</li>
-      </ul>
-      <ul class="list-inline list-unstyled">
-        <li><span class="glyphicon glyphicon-tint"></span>French Press</li>
-        <li><span class="glyphicon glyphicon-tint"></span>Chemex</li>
-        <li><span class="glyphicon glyphicon-tint"></span>Cold Brew</li>
-      </ul>
- -->    </div>
+   </div>
 
     
-      
+      <div class="col-md-7">
+      <h3>BLENDS & SINGLE ORIGIN COFFEES</h3>
       <?php
       $id=$_GET['id'];
       $stmt = $dbh->prepare('SELECT * FROM blends WHERE shopId=:id;');
@@ -139,14 +140,14 @@ $name= strtoupper($name)
       $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
         foreach  ($result as $row) {
-            echo '<div class="col-md-7"><div class="blend">';
+            echo '<div class="col-md-12 blend">';
             echo '<img class="thumbnail col-md-2"src="images/beans.jpg">';
             echo '<p><strong>'.$row['blend_name'].'</strong></p>';
             echo '<p>'.$row['blend_desc'].'</p>';
-            echo '</div></div>'; 
+            echo '</div>'; 
         }
-
-        ?>  
+        ?>
+        </div> 
     </div>
   </div>
 </div>
@@ -166,9 +167,10 @@ $name= strtoupper($name)
 
 <div class="bright-brown">
   <div class="container">
-    <div class="clearfix col-md-12 section-padding">
+    <div class="col-md-12 section-padding">
       <div class="row divider">
       <h2 class="white-text">REVIEWS</h2>
+      <h4>Submitted by: USERNAME</h4>
       <?php
       $id=$_GET['id'];
       $stmt = $dbh->prepare('SELECT * FROM reviews WHERE shopId=:id;');
@@ -179,29 +181,29 @@ $name= strtoupper($name)
         foreach  ($result as $row) {
 
           if ($row['taste_rating'] > 4) {
-              echo '<h3>TASTE</h3><img src="images/5star.png">';
+              echo '<span> TASTE: <img height=15 src="images/5star.png"></span></br>';
           } elseif ($row['taste_rating'] > 3) {
-              echo '<h3>TASTE</h3><img src="images/4star.png">';
+              echo '<span> TASTE: <img height=15 src="images/4star.png"</span></br>';
           } elseif ($row['taste_rating'] > 2) {
-              echo '<h3>TASTE</h3><img src="images/3star.png">';
+              echo '<span> TASTE: <img height=15 src="images/3star.png"></span></br>';
           } elseif ($row['taste_rating'] > 1) {
-              echo '<h3 class="white-text">TASTE</h3><img src="images/2star.png">';
+              echo '<span> TASTE: <img height=15 src="images/2star.png"></span></br>';
           } else {
-              echo '<h3 class="white-text">TASTE:</h3><img src="images/2star.png">';
+              echo '<span> TASTE: <img height=15 src="images/2star.png"></span></br>';
           };
 
           if ($row['atmos_rating'] > 4) {
-              echo '<h3>ATMOSPHERE</h3><img src="images/5star.png">';
+              echo '<span> ATMOSPHERE: <img height=15 src="images/5star.png"</span></br>';
           } elseif ($row['atmos_rating'] > 3) {
-              echo '<h3>ATMOSPHERE</h3><img src="images/4star.png">';
+              echo '<span> ATMOSPHERE: <img height=15 src="images/4star.png"</span></br>';
           } elseif ($row['atmos_rating'] > 2) {
-              echo '<h3>ATMOSPHERE</h3><img src="images/3star.png">';
+              echo '<span> ATMOSPHERE: <img height=15 src="images/3star.png"></span></br>';
           } elseif ($row['atmos_rating'] > 1) {
-              echo '<h3>ATMOSPHERE</h3><img src="images/2star.png">';
+              echo '<span> ATMOSPHERE: <img height=15 src="images/2star.png"></span></br>';
           } else {
-              echo '<h3>ATMOSPHERE</h3><img src="images/2star.png">';
+              echo '<span> ATMOSPHERE: <img height=15 src="images/1star.png"></span></br>';
           };
-          echo '<p>'.$row['review'].'</p>'; 
+          echo '<h4>'.$row['review'].'</h4>'; 
         }
       ?>
       </div>
@@ -217,8 +219,9 @@ $name= strtoupper($name)
 </div>
 
   
-
+  
     <div class="row" id="footer">
+      <div class="container">
       <div class="col-md-9">
       <li><a href="index.php">HOME</a></li>
       <li><a href="about.php">ABOUT</a></li>
@@ -228,11 +231,25 @@ $name= strtoupper($name)
       </div>
       <button class="col-md-2 my-btn" onClick="window.location.href='admin.php'">ADMIN LOGIN</button>
     </div>
-
+</div>
 <script type="text/javascript">
   $(document).ready(function() {
     $(".fancybox").fancybox();
   });
+
+  $(document).ready(function() {
+  $(".various").fancybox({
+    maxWidth  : 800,
+    maxHeight : 600,
+    fitToView : false,
+    width   : '70%',
+    height    : '70%',
+    autoSize  : false,
+    closeClick  : false,
+    openEffect  : 'none',
+    closeEffect : 'none'
+  });
+});
 </script>
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->

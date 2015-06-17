@@ -2,6 +2,7 @@
 $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
+$test = "test";
 ?>
 
 
@@ -18,19 +19,51 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <script>
+
+      var geocoder;
+      var map;
       function initialize() {
-        var mapCanvas = document.getElementById('map-canvas');
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(33.750302, -84.387302);
         var mapOptions = {
-          center: new google.maps.LatLng(33.750302, -84.387302),
           zoom: 12,
+          center: latlng,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
-        var map = new google.maps.Map(mapCanvas, mapOptions)
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
       }
-      google.maps.event.addDomListener(window, 'load', initialize);
+
+      function codeAddress() {
+        var address =[];
+
+        for(i=1; i<3; i++){
+        address.push(document.getElementById('address').innerHTML+", Atlanta, GA");
+        console.log(address[i]);
+        i++;
+        };
+      
+        geocoder.geocode( { 'address': address[0]}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+          } else {
+            console.log("this is not working");
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+          console.log("this is working");
+        });
+      };
+
+
     </script>
+
+
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,11 +72,11 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body onload="initialize(); codeAddress(); "> <!--initialize();-->
     <nav class="navbar navbar-default">
-      <div class="container-fluid">
+      <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="index.php">
             <img alt="Brand" width="250" height="auto" src="images/logo.png">
           </a>
         </div>
@@ -60,6 +93,7 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
     <div class="bright-brown map">
       <div class="container">
         <h1 class="white-text">ATLANTA</h1>
+
         <div id="map-canvas">
         </div>
       </div>
@@ -73,13 +107,18 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
         $stmt = $dbh->prepare('SELECT * FROM shops WHERE (cityId=1 AND statusId=1);');
         $stmt->execute();
         $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+        $shopnumber= 0;
 
         foreach  ($result as $row) {
             echo '<div class="shop-list">';
             echo '<h2>'.$row['shop_name'].'</h2>';
-            echo '<p>'.$row['shop_location'].'</p>';
+            echo '<p id="address">'.$row['shop_location'].'</p>';
+            echo '<input id="address" type="textbox" value="'.$row['shop_location'].', Atlanta, GA">';
             echo '<p>'.$row['phone_number'].'</p>';
             echo '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
+            
+            $shopnumber+=1;
+            echo '<p>'.$shopnumber.'</p>';
             echo '</div>';
         }
 
@@ -89,15 +128,19 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
   
 
     <div class="row" id="footer">
+      <div class="container">
       <div class="col-md-9">
-      <li><a href="index.html">HOME</a></li>
-      <li><a href="about.html">ABOUT</a></li>
-      <li><a href="cities.html">CITIES</a></li> 
-      <li><a href="signup.html">SIGN UP</a></li>
-      <li><a href="login.html">LOGIN</a></li>
+      <li><a href="index.php">HOME</a></li>
+      <li><a href="about.php">ABOUT</a></li>
+      <li><a href="cities.php">CITIES</a></li> 
+      <li><a href="signup.php">SIGN UP</a></li>
+      <li><a href="login.php">LOGIN</a></li>
       </div>
-      <button class="col-md-2 my-btn" onClick="window.location.href='admin.html'">ADMIN LOGIN</button>
+      <button class="col-md-2 my-btn" onClick="window.location.href='admin.php'">ADMIN LOGIN</button>
+      </div>
     </div>
+
+    
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

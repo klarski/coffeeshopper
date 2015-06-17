@@ -22,7 +22,7 @@
   </head>
   <body>
     <nav class="navbar navbar-default">
-      <div class="container-fluid">
+      <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="index.html">
             <img alt="Brand" width="250" height="auto" src="images/logo.png">
@@ -42,11 +42,12 @@
       <div class="container">
       <h1>Thanks for signing up!</h1>
       <h3>Login to start leaving reviews and posting new coffee shops.</h3>
-      <button class="col-md-2 my-btn" onClick="window.location.href='login.html'">LOGIN</button>
+      <button class="col-md-2 my-btn" onClick="window.location.href='login.php'">LOGIN</button>
     </div>
   </div>
 
     <div class="row" id="footer">
+      <div class="container">
       <div class="col-md-9">
       <li><a href="index.html">HOME</a></li>
       <li><a href="about.html">ABOUT</a></li>
@@ -55,6 +56,7 @@
       <li><a href="login.html">LOGIN</a></li>
       </div>
       <button class="col-md-2 my-btn" onClick="window.location.href='admin.html'">ADMIN LOGIN</button>
+      <div/>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

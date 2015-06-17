@@ -1,24 +1,27 @@
-
 <?php
 $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
-$stmt = $dbh->prepare('select * from users;');
+// include('times.php');
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-  $firstname=$_POST['firstname']; //get POST values
-  $lastname=$_POST['lastname'];
-  $email=$_POST['email'];
-  $username=$_POST['username'];
-  $password=$_POST['password'];
-  $stmt=$dbh->prepare('INSERT INTO users(firstname, lastname, email, username, password) values(:firstname, :lastname, :email, :username, :password);');
-  $stmt->bindParam(':firstname',$firstname);
-  $stmt->bindParam(':lastname',$lastname);
-  $stmt->bindParam(':email',$email);
-  $stmt->bindParam(':username',$username);
-  $stmt->bindParam(':password',$password);
+  $cityId=$_POST['cityId'];
+  $shop_name=$_POST['shop_name']; //get POST values
+  $shop_location=$_POST['shop_location'];
+  $phone_number=$_POST['phone_number'];
+  $website=$_POST['website'];
+  $statusId=2;
+  $stmt=$dbh->prepare('INSERT INTO shops(shop_name, shop_location, website, statusId, cityId, phone_number) values(:shop_name, :shop_location, :website, :statusId, :cityId, :phone_number);');
+  $stmt->bindParam(':cityId',$cityId);
+  $stmt->bindParam(':shop_name',$shop_name);
+  $stmt->bindParam(':shop_location',$shop_location);
+  $stmt->bindParam(':phone_number',$phone_number);
+  $stmt->bindParam(':website',$website);
+  $stmt->bindParam(':statusId',$statusId);
   $stmt->execute();
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
   </head>
   <body>
     <nav class="navbar navbar-default">
-      <div class="container-fluid">
+      <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="index.php">
             <img alt="Brand" width="250" height="auto" src="images/logo.png">
@@ -59,31 +62,44 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
       </div>
     </nav>
 
-    <div class="purple" id="login">
+  <div class="purple" id="login">
     <div class="container">
-      <h1 class="white-text">SIGN UP</h1>
-      <form enctype="multipart/form-data" action="signup-complete.php" method="POST">
+      <h1 class="white-text">ADD A SHOP</h1>
+
+      <form action="addshop2.php" method="POST">
+
         <div class="form-group">
-          <label class="white-text" for="firstname">FIRST NAME</label>
-          <input type="firstname" class="form-control" id="firstname" name="firstname" placeholder="Enter first name" required/>
+          <label class="white-text" for="city">SELECT A CITY:</label>
+          <select class="form-control" id="cityId" name="cityId" required/>
+            <option>Select a City</option>
+            <option value="1">Atlanta</option>
+            <option value="2">New York</option>
+            <option value="3">San Francisco</option>
+          </select>
         </div>
+
         <div class="form-group">
-          <label class="white-text" for="lastname">LAST NAME</label>
-          <input type="lastname" class="form-control" id="lastname"  name="lastname"  placeholder="Enter last name" required/>
+          <label class="white-text" for="shop_name">SHOP NAME:</label>
+          <input type="text" class="form-control" id="shop_name" name="shop_name" placeholder="Enter Shop Name" required/>
         </div>
+
         <div class="form-group">
-          <label class="white-text" for="email">EMAIL ADDRESS</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required/>
+          <label class="white-text" for="shop_location">ADDRESS:</label>
+          <input type="text" class="form-control" id="shop_location" name="shop_location" placeholder="Enter Shop Location" required/>
         </div>
+
         <div class="form-group">
-          <label class="white-text" for="username">USERNAME</label>
-          <input type="username" class="form-control" id="username" name="username" placeholder="Enter username" required/>
+          <label class="white-text" for="phone_number">PHONE NUMBER:</label>
+          <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Enter Shop Phone Number" required/>
         </div>
+
         <div class="form-group">
-          <label class="white-text" for="password">PASSWORD</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required/>
+          <label class="white-text" for="website">WEBSITE:</label>
+          <input type="url" class="form-control" id="website" name="website" pattern="https?://.+" placeholder="Enter Website URL - http://website.com" />
         </div>
-        <button type="submit" class="my-btn">SIGN ME UP</button>
+
+ 
+        <button type="submit" class="my-btn">Next</button>
       </form>
     </div>
   </div>
@@ -97,8 +113,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
       <li><a href="signup.php">SIGN UP</a></li>
       <li><a href="login.php">LOGIN</a></li>
       </div>
-      <button class="col-md-2 my-btn" onClick="window.location.href='admin.php'">ADMIN LOGIN</button>
-    </div>
+      <button class="col-md-2 my-btn" onClick="window.location.href='admin.html'">ADMIN LOGIN</button>
+      </div> 
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

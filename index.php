@@ -21,9 +21,9 @@
   </head>
   <body>
     <nav class="navbar navbar-default">
-      <div class="container-fluid">
+      <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="index.php">
             <img alt="Brand" width="250" height="auto" src="images/logo.png">
           </a>
         </div>
@@ -31,6 +31,7 @@
           <li><a href="index.php">HOME</a></li>
           <li><a href="about.php">ABOUT</a></li>
           <li><a href="cities.php">CITIES</a></li>
+          <li><a href="addshop.php">ADD A SHOP</a></li>
           <li><a href="signup.php">SIGN UP</a></li>
           <li><a href="login.php">LOGIN</a></li>
         </ul>
@@ -48,9 +49,9 @@
             <div class="form-group">
               <select name="menu" class="form-control">
                 <option value="#" selected>SELECT A CITY</option>
-                <option value="atlanta.html">Atlanta</option>
-                <option value="newyork.html">New York</option>
-                <option value="sanfran.html">San Francisco</option>
+                <option value="atlanta.php">Atlanta</option>
+                <option value="newyork.php">New York</option>
+                <option value="sanfran.php">San Francisco</option>
               </select>
             </div>
             <button type="button" onClick="location=document.jump.menu.options[document.jump.menu.selectedIndex].value;" class="my-btn btn-block">SEARCH</button>
@@ -59,6 +60,7 @@
       </div>
     </div>
 
+    
     <div id="cta-info" class="row">
         <div class="col-md-4 cta-box cta-out">
           <div class="container-fluid">
@@ -81,8 +83,10 @@
           </div>
         </div>
     </div>
+  </div>
 
     <div class="row" id="footer">
+      <div class="container">
       <div class="col-md-9">
       <li><a href="index.php">HOME</a></li>
       <li><a href="about.php">ABOUT</a></li>
@@ -90,7 +94,8 @@
       <li><a href="signup.php">SIGN UP</a></li>        
       <li><a href="login.php">LOGIN</a></li>
       </div>
-      <button class="col-md-2 my-btn" onClick="window.location.href='admin.html'">ADMIN LOGIN</button>
+      <button class="col-md-2 my-btn" onClick="window.location.href='admin.php'">ADMIN LOGIN</button>
+      </div>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
