@@ -1,50 +1,9 @@
 <?php
-// $user="root";
-// $pass="root";
-// $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
-error_reporting(E_ALL ^ E_DEPRECATED);
+$user="root";
+$pass="root";
+$dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 
-
-$connection = mysql_connect("localhost","root", "root"); 
-if(!$connection) { 
-   die("Database connection failed: " . mysql_error()); 
-}else{
-   $db_select = mysql_select_db("coffeeshopper",$connection); 
-   if (!$db_select) { 
-       die("Database selection failed:: " . mysql_error()); 
-   } 
-}
-
-
-//Start the Session
-session_start();
- // require('connect.php');
-//3. If the form is submitted or not.
-//3.1 If the form is submitted
-if ($_SERVER['REQUEST_METHOD']=='POST') {
-//3.1.1 Assigning posted values to variables.
-$username = $_POST['username'];
-$password = $_POST['password'];
-//3.1.2 Checking the values are existing in the database or not
-$query = "SELECT * FROM `users` WHERE username='$username' and password='$password'";
-
- 
-$result = mysql_query($query) or die(mysql_error());
-$count = mysql_num_rows($result);
-//3.1.2 If the posted values are equal to the database values, then session will be created for the user.
-if ($count == 1){
-$_SESSION['username'] = $username;
-}else{
-//3.1.3 If the login credentials doesn't match, he will be shown with an error message.
-echo "Invalid Login Credentials.";
-}
-}
-//3.1.4 if the user is logged in Greets the user with message
-if (isset($_SESSION['username'])){
-$username = $_SESSION['username'];
-echo "Hi " . $username . " ";
-echo "This is the Members Area";
-}
+session_start(); 
 ?>
 
 
@@ -84,13 +43,31 @@ echo "This is the Members Area";
           <li><a href="cities.php">CITIES</a></li>
           <li><a href="signup.php">SIGN UP</a></li>
           <li><a href="login.php">LOGIN</a></li>
+          <?php
+          echo '<li><a href="logout.php">LOGOUT</a></li>'
+          ?>
         </ul>
       </div>
     </nav>
 
   <div class="purple">
     <div class="container">
-      <button></button>
+      <?php
+
+        if(!isset($_SESSION['username'])){ // If session is not set that redirect to Login Page                            {
+           echo '<a href="login.php">Please login here</a>';
+       }else{
+
+        echo "Hi ".$username." ";
+
+          // echo $_SESSION['use'];
+
+          echo "Login Success";
+
+          echo "<a href='logout.php'> Logout</a> "; 
+        }
+
+      ?>
 
     </div>
   </div>

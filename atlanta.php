@@ -2,7 +2,6 @@
 $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
-$test = "test";
 ?>
 
 
@@ -37,14 +36,17 @@ $test = "test";
 
       function codeAddress() {
         var address =[];
-
-        for(i=1; i<3; i++){
-        address.push(document.getElementById('address').innerHTML+", Atlanta, GA");
-        console.log(address[i]);
+        address.push("6640 Akers Mill Rd SE")
+        for(i=1; i<5; i++){
+        var pushaddresses= document.getElementById('address').innerHTML + ", Atlanta, GA";
+        address.push(pushaddresses);
         i++;
         };
-      
-        geocoder.geocode( { 'address': address[0]}, function(results, status) {
+
+        console.log(address);
+        
+        for(i=1; i<address.length; i++){
+        geocoder.geocode( { 'address': address[i]}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             map.setCenter(results[0].geometry.location);
             var marker = new google.maps.Marker({
@@ -55,9 +57,12 @@ $test = "test";
             console.log("this is not working");
             alert('Geocode was not successful for the following reason: ' + status);
           }
-          console.log("this is working");
+          i++;
+          console.log(address[i]);
+
         });
       };
+    }
 
 
     </script>
@@ -113,12 +118,11 @@ $test = "test";
             echo '<div class="shop-list">';
             echo '<h2>'.$row['shop_name'].'</h2>';
             echo '<p id="address">'.$row['shop_location'].'</p>';
-            echo '<input id="address" type="textbox" value="'.$row['shop_location'].', Atlanta, GA">';
+            echo '<input id="address'.$shopnumber.'" type="textbox" value="'.$row['shop_location'].', Atlanta, GA" hidden>';
             echo '<p>'.$row['phone_number'].'</p>';
-            echo '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
-            
+            echo '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'&city='.$row['cityId'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
             $shopnumber+=1;
-            echo '<p>'.$shopnumber.'</p>';
+            // echo '<p>'.$shopnumber.'</p>';
             echo '</div>';
         }
 

@@ -3,6 +3,10 @@ $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 include('times.php');
+
+$name=$_GET['name'];
+echo $name;
+
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 if(isset($_POST['monday']) && $_POST['monday'] == 'MONDAY'){  
@@ -145,21 +149,9 @@ $stmt->execute();
   <div class="purple" id="login">
     <div class="container">
       <h1 class="white-text">ADD A SHOP</h1>
-<!-- 
-        <div class="form-horizontal">
-        <div class="control-group">
-            <label class="control-label" for="inputEmail">
-                Email</label>
-            <div class="controls">
-                <input type="text" id="inputEmail" placeholder="Email" />
-                </div>
-        </div>
-    </div>
-    <input type='button' value='Add Button' id='addButton' />
-    <input type='button' value='Remove Button' id='removeButton' /> -->
 
 
-      <form action="addshop2.php" method="POST">
+      <form action="addshop2.php?name=" method="POST">
 
         
         <div class="white-text">
@@ -277,7 +269,6 @@ $stmt->execute();
           <input type="checkbox" id="inlineCheckbox3" value="ColdBrew"> Cold Brew
         </label>
         </div> -->
-        
         <button type="submit" class="my-btn">Next</button>
       </form>
     </div>

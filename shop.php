@@ -6,18 +6,17 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
 
 $id=$_GET['id'];
 $name=$_GET['name'];
-$name= strtoupper($name)
+$name= strtoupper($name);
+$cityid=$_GET['city'];
 
-
-// $stmt = $dbh->prepare('SELECT * FROM shops WHERE shopId=$id;');
-// $stmt->execute();
-// $result = $stmt->fetchall(PDO::FETCH_ASSOC);
-// // echo var_dump($result[0]);
-
-// foreach($_GET as $key=>$value){
-//  echo $key, ' => ', $value, "<br/>";
-// }
-
+$city="";
+if($cityid==1){
+  $city="atlanta";
+}elseif ($cityid==2) {
+  $city="newyork";  
+}elseif ($cityid==3) {
+  $city="sanfran";
+}
 ?>
 
 
@@ -36,9 +35,6 @@ $name= strtoupper($name)
     <link href="css/main.css" rel="stylesheet">
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    
-    <!-- Add mousewheel plugin (this is optional) -->
-    <script type="text/javascript" src="/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 
     <!-- Add fancyBox -->
     <link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
@@ -51,6 +47,11 @@ $name= strtoupper($name)
 
     <link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
     <script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
+    <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -85,14 +86,16 @@ $name= strtoupper($name)
         echo '<h1 class="col-md-7 white-text">'.$name.'</h1>';
         ?>
         <div class="row col-md-offset-3">
-        <button class="my-btn various fancybox.ajax" href='editshop.php'>EDIT SHOP INFO</button>
-        <button class="my-btn" onClick="window.location.href='atlanta.php'">BACK TO ATLANTA</button>
+        <!-- <button class="my-btn various fancybox.ajax" href='editshop.php'>EDIT SHOP INFO</button> -->
+        <?php 
+        echo '<a href="'.$city.'.php"><button class="my-btn col-md-offset-3">BACK TO LIST OF SHOPS</button></a>'
+        ?>
         </div>
       </div>   
     </div>
 
   <div class="container">
-    <div class="purple details-box col-md-5 white-text">
+    <div class="purple details-box col-md-4 white-text">
       <?php
       $id=$_GET['id'];
       $stmt = $dbh->prepare('SELECT * FROM shops WHERE shopId=:id;');
@@ -131,7 +134,7 @@ $name= strtoupper($name)
 
     
       <div class="col-md-7">
-      <h3>BLENDS & SINGLE ORIGIN COFFEES</h3>
+      <h2 class="white-text">BLENDS & SINGLE ORIGIN COFFEES</h2>
       <?php
       $id=$_GET['id'];
       $stmt = $dbh->prepare('SELECT * FROM blends WHERE shopId=:id;');
@@ -155,11 +158,24 @@ $name= strtoupper($name)
   <div class="purple" id="image-gallery">
     <div class="container section-padding">
       <h2 class="white-text col-md-4">IMAGE GALLERY</h2>
-      <button class="col-md-2 col-md-offset-5 my-btn">ADD AN IMAGE</button>
-      <div class="row col-md-12 ">
-        <a class="fancybox" rel="group" href="images/octane1.jpg"><img src="images/octane1.jpg" alt=""/></a>
-        <a class="fancybox" rel="group" href="images/octane2.jpg"><img width="300" src="images/octane2.jpg"></a>
-        <a class="fancybox" rel="group" href="images/octane3.jpg"><img width="300" src="images/octane3.jpg"></a>
+      <?php
+
+      echo '<button class="col-md-2 col-md-offset-5 my-btn various fancybox.iframe" href="addimage.php?id='.$id.'">ADD AN IMAGE</button>';
+      ?>
+      
+      <div class="row col-md-12 carousel">
+        <?php
+        $id=$_GET['id'];
+        $stmt = $dbh->prepare('SELECT * FROM shop_images WHERE shopId=:id;');
+        $stmt->bindParam(':id',$id);
+        $stmt->execute();
+        $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+        foreach  ($result as $row) {
+            echo '<div><img height="200" width="auto" src="'.$row['image_file'].'" alt=""/></div>';
+        }
+        ?>
+
       </div>
     </div>
   </div>
@@ -170,15 +186,16 @@ $name= strtoupper($name)
     <div class="col-md-12 section-padding">
       <div class="row divider">
       <h2 class="white-text">REVIEWS</h2>
-      <h4>Submitted by: USERNAME</h4>
+      
       <?php
       $id=$_GET['id'];
-      $stmt = $dbh->prepare('SELECT * FROM reviews WHERE shopId=:id;');
+      $stmt = $dbh->prepare('SELECT * FROM reviews LEFT JOIN users ON reviews.userId=users.userId WHERE shopId=:id; ');
       $stmt->bindParam(':id',$id);
       $stmt->execute();
       $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
         foreach  ($result as $row) {
+          echo '<h4>Submitted by: '.$row['username'].'</h4>';
 
           if ($row['taste_rating'] > 4) {
               echo '<span> TASTE: <img height=15 src="images/5star.png"></span></br>';
@@ -203,7 +220,7 @@ $name= strtoupper($name)
           } else {
               echo '<span> ATMOSPHERE: <img height=15 src="images/1star.png"></span></br>';
           };
-          echo '<h4>'.$row['review'].'</h4>'; 
+          echo '<h4 class="review">'.$row['review'].'</h4>'; 
         }
       ?>
       </div>
@@ -251,8 +268,48 @@ $name= strtoupper($name)
   });
 });
 </script>
+
+<script type="text/javascript">
+      $(document).ready(function(){
+          $('.carousel').slick({
+          dots: true,
+          infinite: false,
+          speed: 300,
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+              }
+            },
+            {
+              breakpoint: 600,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]
+      });
+      });      
+        
+  </script>
+
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="slick/slick.min.js"></script>
   </body>
 </html>

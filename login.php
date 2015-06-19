@@ -89,7 +89,7 @@ echo "This is the Members Area";
   <div class="purple" id="login">
     <div class="container">
       <h1 class="white-text">LOGIN</h1>
-      <form  action="shop.php" method="POST">
+      <form  action="login-home.php" method="POST">
         <div class="form-group">
           <label class="white-text" for="exampleInputEmail1">USERNAME</label>
           <input type="text" class="form-control" id="username" name="username" placeholder="Enter email" required/>

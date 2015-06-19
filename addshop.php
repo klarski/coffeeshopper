@@ -2,23 +2,24 @@
 $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
-// include('times.php');
+
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-  $cityId=$_POST['cityId'];
-  $shop_name=$_POST['shop_name']; //get POST values
-  $shop_location=$_POST['shop_location'];
-  $phone_number=$_POST['phone_number'];
-  $website=$_POST['website'];
-  $statusId=2;
-  $stmt=$dbh->prepare('INSERT INTO shops(shop_name, shop_location, website, statusId, cityId, phone_number) values(:shop_name, :shop_location, :website, :statusId, :cityId, :phone_number);');
-  $stmt->bindParam(':cityId',$cityId);
-  $stmt->bindParam(':shop_name',$shop_name);
-  $stmt->bindParam(':shop_location',$shop_location);
-  $stmt->bindParam(':phone_number',$phone_number);
-  $stmt->bindParam(':website',$website);
-  $stmt->bindParam(':statusId',$statusId);
-  $stmt->execute();
+      $cityId=$_POST['cityId'];
+      $shop_name=$_POST['shop_name']; //get POST values
+      $shop_location=$_POST['shop_location'];
+      $phone_number=$_POST['phone_number'];
+      $website=$_POST['website'];
+      $statusId=2;
+      $stmt=$dbh->prepare('INSERT INTO shops(shop_name, shop_location, website, statusId, cityId, phone_number) values(:shop_name, :shop_location, :website, :statusId, :cityId, :phone_number);');
+      $stmt->bindParam(':cityId',$cityId);
+      $stmt->bindParam(':shop_name',$shop_name);
+      $stmt->bindParam(':shop_location',$shop_location);
+      $stmt->bindParam(':phone_number',$phone_number);
+      $stmt->bindParam(':website',$website);
+      $stmt->bindParam(':statusId',$statusId);
+      $stmt->execute();
 }
+
 ?>
 
 
@@ -37,12 +38,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
 
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  end if]-->
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -66,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <div class="container">
       <h1 class="white-text">ADD A SHOP</h1>
 
-      <form action="addshop2.php" method="POST">
 
+      <form action="" method="POST">
         <div class="form-group">
           <label class="white-text" for="city">SELECT A CITY:</label>
           <select class="form-control" id="cityId" name="cityId" required/>
@@ -98,8 +100,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
           <input type="url" class="form-control" id="website" name="website" pattern="https?://.+" placeholder="Enter Website URL - http://website.com" />
         </div>
 
+        <button type="submit" class="my-btn">Next</button>' ?>
  
-        <button type="submit" class="my-btn">Next</button>
       </form>
     </div>
   </div>
@@ -113,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
       <li><a href="signup.php">SIGN UP</a></li>
       <li><a href="login.php">LOGIN</a></li>
       </div>
-      <button class="col-md-2 my-btn" onClick="window.location.href='admin.html'">ADMIN LOGIN</button>
+      <button class="col-md-2 my-btn" onClick="window.location.href='admin.php'">ADMIN LOGIN</button>
       </div> 
     </div>
 
@@ -121,5 +123,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+
   </body>
 </html>
