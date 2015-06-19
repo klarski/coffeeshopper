@@ -4,8 +4,14 @@ $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 include('times.php');
 
-$name=$_GET['name'];
-echo $name;
+session_start(); 
+$shop_name=$_GET['name'];
+$stmt=$dbh->prepare('SELECT shopId FROM shops WHERE shop_name= :name');
+$stmt->bindParam(':name',$shop_name);
+$stmt->execute();
+$result = $stmt->fetchall(PDO::FETCH_ASSOC);
+foreach  ($result as $row) {
+
 
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 
@@ -13,7 +19,7 @@ if(isset($_POST['monday']) && $_POST['monday'] == 'MONDAY'){
 $monday=$_POST['monday'];
 $monday_open=$_POST['monday_open'];
 $monday_close=$_POST['monday_close'];
-$shopId=2;
+$shopId=$row['shopId'];;
 $stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
 $stmt->bindParam(':day_of_week',$monday);
 $stmt->bindParam(':time_open',$monday_open);
@@ -98,6 +104,7 @@ $stmt->bindParam(':time_open',$sunday_open);
 $stmt->bindParam(':time_closed',$sunday_close);
 $stmt->bindParam(':shopId',$shopId);
 $stmt->execute();
+}
 };
 
 

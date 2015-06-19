@@ -3,6 +3,8 @@ $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 
+session_start(); 
+
 if ($_SERVER['REQUEST_METHOD']=='POST') {
       $cityId=$_POST['cityId'];
       $shop_name=$_POST['shop_name']; //get POST values
@@ -18,7 +20,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
       $stmt->bindParam(':website',$website);
       $stmt->bindParam(':statusId',$statusId);
       $stmt->execute();
+      header('Location:addshop2.php?name='.$shop_name);
 }
+
+
 
 ?>
 
@@ -58,8 +63,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
           <li><a href="index.php">HOME</a></li>
           <li><a href="about.php">ABOUT</a></li>
           <li><a href="cities.php">CITIES</a></li>
-          <li><a href="signup.php">SIGN UP</a></li>
-          <li><a href="login.php">LOGIN</a></li>
+          <li><a href="addshop.php">ADD A SHOP</a></li>
+          <?php  if(!isset($_SESSION['username'])){
+          echo '<li><a href="signup.php">SIGN UP</a></li>';
+          echo '<li><a href="login.php">LOGIN</a></li>'; 
+          }else{
+          echo '<li><a href="logout.php">LOGOUT</a></li>';
+          }?>
         </ul>
       </div>
     </nav>
@@ -68,41 +78,48 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <div class="container">
       <h1 class="white-text">ADD A SHOP</h1>
 
+      <?php
 
-      <form action="" method="POST">
-        <div class="form-group">
-          <label class="white-text" for="city">SELECT A CITY:</label>
-          <select class="form-control" id="cityId" name="cityId" required/>
-            <option>Select a City</option>
-            <option value="1">Atlanta</option>
-            <option value="2">New York</option>
-            <option value="3">San Francisco</option>
-          </select>
-        </div>
+        if(!isset($_SESSION['username'])){ // If session is not set that redirect to Login Page                            {
+           echo '<a href="login.php">Please login to add a new shop</a>';
+       }else{
+          echo <<<EOL
+          <form action="addshop.php" method="POST">'
+            <div class="form-group">
+              <label class="white-text" for="city">SELECT A CITY:</label>
+              <select class="form-control" id="cityId" name="cityId" required/>
+                <option>Select a City</option>
+                <option value="1">Atlanta</option>
+                <option value="2">New York</option>
+                <option value="3">San Francisco</option>
+              </select>
+            </div>
 
-        <div class="form-group">
-          <label class="white-text" for="shop_name">SHOP NAME:</label>
-          <input type="text" class="form-control" id="shop_name" name="shop_name" placeholder="Enter Shop Name" required/>
-        </div>
+            <div class="form-group">
+              <label class="white-text" for="shop_name">SHOP NAME:</label>
+              <input type="text" class="form-control" id="shop_name" name="shop_name" placeholder="Enter Shop Name" required/>
+            </div>
 
-        <div class="form-group">
-          <label class="white-text" for="shop_location">ADDRESS:</label>
-          <input type="text" class="form-control" id="shop_location" name="shop_location" placeholder="Enter Shop Location" required/>
-        </div>
+            <div class="form-group">
+              <label class="white-text" for="shop_location">ADDRESS:</label>
+              <input type="text" class="form-control" id="shop_location" name="shop_location" placeholder="Enter Shop Location" required/>
+            </div>
 
-        <div class="form-group">
-          <label class="white-text" for="phone_number">PHONE NUMBER:</label>
-          <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Enter Shop Phone Number" required/>
-        </div>
+            <div class="form-group">
+              <label class="white-text" for="phone_number">PHONE NUMBER:</label>
+              <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Enter Shop Phone Number" required/>
+            </div>
 
-        <div class="form-group">
-          <label class="white-text" for="website">WEBSITE:</label>
-          <input type="url" class="form-control" id="website" name="website" pattern="https?://.+" placeholder="Enter Website URL - http://website.com" />
-        </div>
+            <div class="form-group">
+              <label class="white-text" for="website">WEBSITE:</label>
+              <input type="url" class="form-control" id="website" name="website" pattern="https?://.+" placeholder="Enter Website URL - http://website.com" />
+            </div>
 
-        <button type="submit" class="my-btn">Next</button>' ?>
- 
-      </form>
+            <button type="submit" class="my-btn">Next</button>
+     
+          </form>
+EOL;
+}?>
     </div>
   </div>
 

@@ -1,4 +1,5 @@
 <?php
+session_start(); 
 
 $user="root";
 $pass="root";
@@ -72,8 +73,13 @@ if($cityid==1){
           <li><a href="index.php">HOME</a></li>
           <li><a href="about.php">ABOUT</a></li>
           <li><a href="cities.php">CITIES</a></li>
-          <li><a href="signup.php">SIGN UP</a></li>
-          <li><a href="login.php">LOGIN</a></li>
+          <li><a href="addshop.php">ADD A SHOP</a></li>
+          <?php  if(!isset($_SESSION['username'])){
+          echo '<li><a href="signup.php">SIGN UP</a></li>';
+          echo '<li><a href="login.php">LOGIN</a></li>'; 
+          }else{
+          echo '<li><a href="logout.php">LOGOUT</a></li>';
+          }?>
         </ul>
       </div>
     </nav>
@@ -86,7 +92,6 @@ if($cityid==1){
         echo '<h1 class="col-md-7 white-text">'.$name.'</h1>';
         ?>
         <div class="row col-md-offset-3">
-        <!-- <button class="my-btn various fancybox.ajax" href='editshop.php'>EDIT SHOP INFO</button> -->
         <?php 
         echo '<a href="'.$city.'.php"><button class="my-btn col-md-offset-3">BACK TO LIST OF SHOPS</button></a>'
         ?>
@@ -185,8 +190,13 @@ if($cityid==1){
   <div class="container">
     <div class="col-md-12 section-padding">
       <div class="row divider">
-      <h2 class="white-text">REVIEWS</h2>
-      
+         <div class="row">
+      <h2 class="white-text col-md-7">REVIEWS</h2>
+      <?php
+
+      echo '<button class="col-md-2 col-md-offset-2 my-btn various fancybox.iframe" href="addimage.php?id='.$id.'">ADD A REVIEW</button>';
+      ?>
+      </div>
       <?php
       $id=$_GET['id'];
       $stmt = $dbh->prepare('SELECT * FROM reviews LEFT JOIN users ON reviews.userId=users.userId WHERE shopId=:id; ');

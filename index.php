@@ -1,3 +1,9 @@
+<?php
+session_start(); 
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -32,8 +38,12 @@
           <li><a href="about.php">ABOUT</a></li>
           <li><a href="cities.php">CITIES</a></li>
           <li><a href="addshop.php">ADD A SHOP</a></li>
-          <li><a href="signup.php">SIGN UP</a></li>
-          <li><a href="login.php">LOGIN</a></li>
+          <?php  if(!isset($_SESSION['username'])){
+          echo '<li><a href="signup.php">SIGN UP</a></li>';
+          echo '<li><a href="login.php">LOGIN</a></li>'; 
+          }else{
+          echo '<li><a href="logout.php">LOGOUT</a></li>';
+          }?>
         </ul>
       </div>
     </nav>
