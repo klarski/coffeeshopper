@@ -325,4 +325,14 @@ a:visited, a:hover{
 	border-bottom: 1px solid #38281E;
 }
 
+.popup{
+	margin: 30px 100px;
+}
 
+.popup p{
+	text-align: center;
+}
+
+.popup-btn, .popup textarea, .popup select{
+	width: 360px;
+}

@@ -194,7 +194,7 @@ if($cityid==1){
       <h2 class="white-text col-md-7">REVIEWS</h2>
       <?php
 
-      echo '<button class="col-md-2 col-md-offset-2 my-btn various fancybox.iframe" href="addimage.php?id='.$id.'">ADD A REVIEW</button>';
+      echo '<button class="col-md-2 col-md-offset-2 my-btn various fancybox.iframe" href="addreview.php?id='.$id.'">ADD A REVIEW</button>';
       ?>
       </div>
       <?php
@@ -266,7 +266,7 @@ if($cityid==1){
 
   $(document).ready(function() {
   $(".various").fancybox({
-    maxWidth  : 800,
+    maxWidth  : 600,
     maxHeight : 600,
     fitToView : false,
     width   : '70%',

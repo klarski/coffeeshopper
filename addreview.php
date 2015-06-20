@@ -7,36 +7,23 @@ $id=$_GET['id'];
 $shopId=$id;
 // $name=$_GET['name'];
 
-$uploadDir = 'uploads/';
+session_start(); 
+// $_SESSION['username']=$_GET['username'];
 
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-  setImg();
   $shopId=$_POST['shopId'];
-  $imgUrl=$_FILES['userfile']['name'];
-  $filePath = $uploadDir.$imgUrl;
-  $stmt=$dbh->prepare('INSERT INTO shop_images(shopId, image_file) values(:shopId, :image_file);');
+  $atmos_rating=$_POST['atmos_rating'];
+  $taste_rating=$_POST['taste_rating'];
+  $review=$_POST['review'];
+  // $username=$_GET['username'];
+  $stmt=$dbh->prepare('INSERT INTO reviews(shopId, atmos_rating, taste_rating, review, userId) values(:shopId, :atmos_rating, :taste_rating, :review, :userId);');
   $stmt->bindParam(':shopId',$shopId);
-  $stmt->bindParam(':image_file',$filePath);
+  $stmt->bindParam(':atmos_rating',$atmos_rating);
+  $stmt->bindParam(':taste_rating',$taste_rating);
+  $stmt->bindParam(':review',$review);
+  // $stmt->bindParam(':username',$username);
   $stmt->execute();
-  echo "Thank you";
 }
-
-function setImg(){
-      $type = str_replace("image/", ".", $_FILES['userfile']['type']);
-
-      if ($type == ".jpeg" || $type == ".png") {
-        $setimg = "uploads/";
-        $imgName = $_FILES['userfile']['name'];
-        $tmp= $_FILES['userfile']['tmp_name'];
-        $img = $setimg.$imgName;
-        move_uploaded_file($tmp, $img);
-        return $img;
-         }else{
-        echo "<h1>Nope</h1>";
-        // $img = "img/fail.jpg";
-        // return $img;
-      }
-    }
 
 ?>
 
@@ -75,16 +62,35 @@ function setImg(){
   </head>
   <body>
     <div class="container popup">
+
 <?php
-echo '<form action="addimage.php?id='.$id.'" method="POST" enctype="multipart/form-data">';
-echo '<div class="form-group">';
-echo '<h3>SELECT AN IMAGE TO UPLOAD:</h3>';
-echo '<input name="userfile" id="userfile" type="file">';
-echo '<p class="help-block">Only upload a PNG or JPEG file.</p>';
-echo '</div>';
-echo '<input name="shopId" id="shopId" type="text" value="'.$id.'"hidden>';
-echo '<input class="my-btn popup-btn" type="submit" value="Upload Image" name="submit">';
-echo '</form>';
+  echo '<h2>WRITE A REVIEW:</h2>';
+  echo '<form action="reviewthanks.php" method="POST" enctype="multipart/form-data">';
+  echo '<div class="form-group">';
+  echo '<label>ATMOSPHERE:</label>';
+  echo '<select class="form-control" id="atmos_rating" name="atmos_rating" required>';
+  echo '<option value="5" >5 Stars</option>';
+  echo '<option value="4" >4 Stars</option>';
+  echo '<option value="3" >3 Stars</option>';
+  echo '<option value="2" >2 Stars</option>';
+  echo '<option value="1" >1 Stars</option></select>';
+  echo '</div>';
+  echo '<div class="form-group">';
+  echo '<label>TASTE:</label>';
+  echo '<select class="form-control" id="taste_rating" name="taste_rating" required>';
+  echo '<option value="5" >5 Stars</option>';
+  echo '<option value="4" >4 Stars</option>';
+  echo '<option value="3" >3 Stars</option>';
+  echo '<option value="2" >2 Stars</option>';
+  echo '<option value="1" >1 Stars</option></select>';
+  echo '</div>';
+  echo '<div class="from-group">';
+  echo '<label>WRITE REVIEW:</label>';
+  echo '<textarea name="review" id="review">Enter text here...</textarea>';
+  echo '<div>';
+  echo '<input name="shopId" id="shopId" type="text" value="'.$id.'"hidden>';
+  echo '<input class="my-btn popup-btn" type="submit" value="Upload Image" name="submit">';
+  echo '</form>';
 ?>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -5,110 +5,111 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
 include('times.php');
 
 session_start(); 
+
 $shop_name=$_GET['name'];
 $stmt=$dbh->prepare('SELECT shopId FROM shops WHERE shop_name= :name');
 $stmt->bindParam(':name',$shop_name);
 $stmt->execute();
 $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 foreach  ($result as $row) {
+$id=$row['shopId'];
+echo $id;
+}
 
 
 if ($_SERVER['REQUEST_METHOD']=='POST') {
 
-if(isset($_POST['monday']) && $_POST['monday'] == 'MONDAY'){  
-$monday=$_POST['monday'];
-$monday_open=$_POST['monday_open'];
-$monday_close=$_POST['monday_close'];
-$shopId=$row['shopId'];;
-$stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
-$stmt->bindParam(':day_of_week',$monday);
-$stmt->bindParam(':time_open',$monday_open);
-$stmt->bindParam(':time_closed',$monday_close);
-$stmt->bindParam(':shopId',$shopId);
-$stmt->execute();
-}
+  if(isset($_POST['monday']) && $_POST['monday'] == 'MONDAY'){  
+  $monday=$_POST['monday'];
+  $monday_open=$_POST['monday_open'];
+  $monday_close=$_POST['monday_close'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
+  $stmt->bindParam(':day_of_week',$monday);
+  $stmt->bindParam(':time_open',$monday_open);
+  $stmt->bindParam(':time_closed',$monday_close);
+  $stmt->bindParam(':shopId',$shopId);
+  $stmt->execute();
+  }
 
-if(isset($_POST['tuesday']) && $_POST['tuesday'] == 'TUESDAY'){
-$tuesday=$_POST['tuesday'];
-$tuesday_open=$_POST['tuesday_open'];
-$tuesday_close=$_POST['tuesday_close'];
-$shopId=2;
-$stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
-$stmt->bindParam(':day_of_week',$tuesday);
-$stmt->bindParam(':time_open',$tuesday_open);
-$stmt->bindParam(':time_closed',$tuesday_close);
-$stmt->bindParam(':shopId',$shopId);
-$stmt->execute();
+  if(isset($_POST['tuesday']) && $_POST['tuesday'] == 'TUESDAY'){
+  $tuesday=$_POST['tuesday'];
+  $tuesday_open=$_POST['tuesday_open'];
+  $tuesday_close=$_POST['tuesday_close'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
+  $stmt->bindParam(':day_of_week',$tuesday);
+  $stmt->bindParam(':time_open',$tuesday_open);
+  $stmt->bindParam(':time_closed',$tuesday_close);
+  $stmt->bindParam(':shopId',$shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['wednesday']) && $_POST['wednesday'] == 'WEDNESDAY'){
+  $wednesday=$_POST['wednesday'];
+  $wednesday_open=$_POST['wednesday_open'];
+  $wednesday_close=$_POST['wednesday_close'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
+  $stmt->bindParam(':day_of_week',$wednesday);
+  $stmt->bindParam(':time_open',$wednesday_open);
+  $stmt->bindParam(':time_closed',$wednesday_close);
+  $stmt->bindParam(':shopId',$shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['thursday']) && $_POST['thursday'] == 'THURSDAY'){
+  $thursday=$_POST['thursday'];
+  $thursday_open=$_POST['thursday_open'];
+  $thursday_close=$_POST['thursday_close'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
+  $stmt->bindParam(':day_of_week',$thursday);
+  $stmt->bindParam(':time_open',$thursday_open);
+  $stmt->bindParam(':time_closed',$thursday_close);
+  $stmt->bindParam(':shopId',$shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['friday']) && $_POST['friday'] == 'FRIDAY'){
+  $friday=$_POST['friday'];
+  $friday_open=$_POST['friday_open'];
+  $friday_close=$_POST['friday_close'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
+  $stmt->bindParam(':day_of_week',$friday);
+  $stmt->bindParam(':time_open',$friday_open);
+  $stmt->bindParam(':time_closed',$friday_close);
+  $stmt->bindParam(':shopId',$shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['saturday']) && $_POST['saturday'] == 'SATURDAY'){
+  $saturday=$_POST['saturday'];
+  $saturday_open=$_POST['saturday_open'];
+  $saturday_close=$_POST['saturday_close'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
+  $stmt->bindParam(':day_of_week',$saturday);
+  $stmt->bindParam(':time_open',$saturday_open);
+  $stmt->bindParam(':time_closed',$saturday_close);
+  $stmt->bindParam(':shopId',$shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['sunday']) && $_POST['sunday'] == 'SUNDAY'){
+  $sunday=$_POST['sunday'];
+  $sunday_open=$_POST['sunday_open'];
+  $sunday_close=$_POST['sunday_close'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
+  $stmt->bindParam(':day_of_week',$sunday);
+  $stmt->bindParam(':time_open',$sunday_open);
+  $stmt->bindParam(':time_closed',$sunday_close);
+  $stmt->bindParam(':shopId',$shopId);
+  $stmt->execute();
+  };
 };
-
-if(isset($_POST['wednesday']) && $_POST['wednesday'] == 'WEDNESDAY'){
-$wednesday=$_POST['wednesday'];
-$wednesday_open=$_POST['wednesday_open'];
-$wednesday_close=$_POST['wednesday_close'];
-$shopId=2;
-$stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
-$stmt->bindParam(':day_of_week',$wednesday);
-$stmt->bindParam(':time_open',$wednesday_open);
-$stmt->bindParam(':time_closed',$wednesday_close);
-$stmt->bindParam(':shopId',$shopId);
-$stmt->execute();
-};
-
-if(isset($_POST['thursday']) && $_POST['thursday'] == 'THURSDAY'){
-$thursday=$_POST['thursday'];
-$thursday_open=$_POST['thursday_open'];
-$thursday_close=$_POST['thursday_close'];
-$shopId=2;
-$stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
-$stmt->bindParam(':day_of_week',$thursday);
-$stmt->bindParam(':time_open',$thursday_open);
-$stmt->bindParam(':time_closed',$thursday_close);
-$stmt->bindParam(':shopId',$shopId);
-$stmt->execute();
-};
-
-if(isset($_POST['friday']) && $_POST['friday'] == 'FRIDAY'){
-$friday=$_POST['friday'];
-$friday_open=$_POST['friday_open'];
-$friday_close=$_POST['friday_close'];
-$shopId=2;
-$stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
-$stmt->bindParam(':day_of_week',$friday);
-$stmt->bindParam(':time_open',$friday_open);
-$stmt->bindParam(':time_closed',$friday_close);
-$stmt->bindParam(':shopId',$shopId);
-$stmt->execute();
-};
-
-if(isset($_POST['saturday']) && $_POST['saturday'] == 'SATURDAY'){
-$saturday=$_POST['saturday'];
-$saturday_open=$_POST['saturday_open'];
-$saturday_close=$_POST['saturday_close'];
-$shopId=2;
-$stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
-$stmt->bindParam(':day_of_week',$saturday);
-$stmt->bindParam(':time_open',$saturday_open);
-$stmt->bindParam(':time_closed',$saturday_close);
-$stmt->bindParam(':shopId',$shopId);
-$stmt->execute();
-};
-
-if(isset($_POST['sunday']) && $_POST['sunday'] == 'SUNDAY'){
-$sunday=$_POST['sunday'];
-$sunday_open=$_POST['sunday_open'];
-$sunday_close=$_POST['sunday_close'];
-$shopId=2;
-$stmt=$dbh->prepare('INSERT INTO shop_hours(day_of_week, time_open, time_closed, shopId) values(:day_of_week, :time_open, :time_closed, :shopId);');
-$stmt->bindParam(':day_of_week',$sunday);
-$stmt->bindParam(':time_open',$sunday_open);
-$stmt->bindParam(':time_closed',$sunday_close);
-$stmt->bindParam(':shopId',$shopId);
-$stmt->execute();
-}
-};
-
-
-}
 
 ?>
 
@@ -147,8 +148,13 @@ $stmt->execute();
           <li><a href="index.php">HOME</a></li>
           <li><a href="about.php">ABOUT</a></li>
           <li><a href="cities.php">CITIES</a></li>
-          <li><a href="signup.php">SIGN UP</a></li>
-          <li><a href="login.php">LOGIN</a></li>
+          <li><a href="addshop.php">ADD A SHOP</a></li>
+          <?php  if(!isset($_SESSION['username'])){
+          echo '<li><a href="signup.php">SIGN UP</a></li>';
+          echo '<li><a href="login.php">LOGIN</a></li>'; 
+          }else{
+          echo '<li><a href="logout.php">LOGOUT</a></li>';
+          }?>
         </ul>
       </div>
     </nav>
@@ -157,10 +163,7 @@ $stmt->execute();
     <div class="container">
       <h1 class="white-text">ADD A SHOP</h1>
 
-
-      <form action="addshop2.php?name=" method="POST">
-
-        
+      <form action='addshop3.php'method="POST">
         <div class="white-text">
           <label class="white-text" for="hours">HOURS:</label></br>
 
@@ -249,35 +252,10 @@ $stmt->execute();
           </div>
 
         </div>
-<!--         <div class="form-group white-text">
-          <label class="white-text" for="website">METHODS OF BREWING:</label></br>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox1" value="Drip"> Drip
-        </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox2" value="Espresso"> Espresso
-        </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="French Press"> French Press
-        </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="Chemex"> Chemex
-        </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="AeroPress"> AeroPress
-        </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="Turkish"> Turkish
-        </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="PourOver"> Pour Over
-        </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="ColdBrew"> Cold Brew
-        </label>
-        </div> -->
         <button type="submit" class="my-btn">Next</button>
       </form>
+
+
     </div>
   </div>
 

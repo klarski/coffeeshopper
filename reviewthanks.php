@@ -75,17 +75,7 @@ function setImg(){
   </head>
   <body>
     <div class="container popup">
-<?php
-echo '<form action="addimage.php?id='.$id.'" method="POST" enctype="multipart/form-data">';
-echo '<div class="form-group">';
-echo '<h3>SELECT AN IMAGE TO UPLOAD:</h3>';
-echo '<input name="userfile" id="userfile" type="file">';
-echo '<p class="help-block">Only upload a PNG or JPEG file.</p>';
-echo '</div>';
-echo '<input name="shopId" id="shopId" type="text" value="'.$id.'"hidden>';
-echo '<input class="my-btn popup-btn" type="submit" value="Upload Image" name="submit">';
-echo '</form>';
-?>
+      <h2>Thanks for submitting a review!</h2>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
