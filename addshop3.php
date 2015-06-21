@@ -4,25 +4,153 @@ $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 
 session_start(); 
-echo $id;
+$id=$_GET['id'];
 
-// if ($_SERVER['REQUEST_METHOD']=='POST') {
-//       $cityId=$_POST['cityId'];
-//       $shop_name=$_POST['shop_name']; //get POST values
-//       $shop_location=$_POST['shop_location'];
-//       $phone_number=$_POST['phone_number'];
-//       $website=$_POST['website'];
-//       $statusId=2;
-//       $stmt=$dbh->prepare('INSERT INTO shops(shop_name, shop_location, website, statusId, cityId, phone_number) values(:shop_name, :shop_location, :website, :statusId, :cityId, :phone_number);');
-//       $stmt->bindParam(':cityId',$cityId);
-//       $stmt->bindParam(':shop_name',$shop_name);
-//       $stmt->bindParam(':shop_location',$shop_location);
-//       $stmt->bindParam(':phone_number',$phone_number);
-//       $stmt->bindParam(':website',$website);
-//       $stmt->bindParam(':statusId',$statusId);
-//       $stmt->execute();
-//       header('Location:addshop2.php?name='.$shop_name);
-// }
+if ($_SERVER['REQUEST_METHOD']=='POST') {
+
+  if(isset($_POST['drip']) && $_POST['drip'] == 'Drip'){ 
+  $drip=$_POST['drip'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO brew_methods (shopId, brew_type) values(:shopId, :brew_type);');
+  $stmt->bindParam(':brew_type', $drip);
+  $stmt->bindParam(':shopId', $shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['espresso']) && $_POST['espresso'] == 'Espresso'){ 
+  $espresso=$_POST['espresso'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO brew_methods (shopId, brew_type) values(:shopId, :brew_type);');
+  $stmt->bindParam(':brew_type', $espresso);
+  $stmt->bindParam(':shopId', $shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['frenchpress']) && $_POST['frenchpress'] == 'French Press'){ 
+  $frenchpress=$_POST['frenchpress'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO brew_methods (shopId, brew_type) values(:shopId, :brew_type);');
+  $stmt->bindParam(':brew_type', $frenchpress);
+  $stmt->bindParam(':shopId', $shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['chemex']) && $_POST['chemex'] == 'Chemex'){ 
+  $chemex=$_POST['chemex'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO brew_methods (shopId, brew_type) values(:shopId, :brew_type);');
+  $stmt->bindParam(':brew_type', $chemex);
+  $stmt->bindParam(':shopId', $shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['aeropress']) && $_POST['aeropress'] == 'Aeropress'){ 
+  $aeropress=$_POST['aeropress'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO brew_methods (shopId, brew_type) values(:shopId, :brew_type);');
+  $stmt->bindParam(':brew_type', $aeropress);
+  $stmt->bindParam(':shopId', $shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['turkish']) && $_POST['turkish'] == 'Turkish'){ 
+  $turkish=$_POST['turkish'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO brew_methods (shopId, brew_type) values(:shopId, :brew_type);');
+  $stmt->bindParam(':brew_type', $turkish);
+  $stmt->bindParam(':shopId', $shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['pourover']) && $_POST['pourover'] == 'Pour Over'){ 
+  $pourover=$_POST['pourover'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO brew_methods (shopId, brew_type) values(:shopId, :brew_type);');
+  $stmt->bindParam(':brew_type', $pourover);
+  $stmt->bindParam(':shopId', $shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['pourover']) && $_POST['pourover'] == 'Pour Over'){ 
+  $pourover=$_POST['pourover'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO brew_methods (shopId, brew_type) values(:shopId, :brew_type);');
+  $stmt->bindParam(':brew_type', $pourover);
+  $stmt->bindParam(':shopId', $shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['coldbrew']) && $_POST['coldbrew'] == 'Cold Brew'){ 
+  $coldbrew=$_POST['coldbrew'];
+  $shopId=$id;
+  $stmt=$dbh->prepare('INSERT INTO brew_methods (shopId, brew_type) values(:shopId, :brew_type);');
+  $stmt->bindParam(':brew_type', $coldbrew);
+  $stmt->bindParam(':shopId', $shopId);
+  $stmt->execute();
+  };
+
+  if(isset($_POST['blend_name'])){
+    if (empty($_POST['blend_name'])){
+      header('Location:shopsubmitted.php');
+    }else{
+      $blend_name=$_POST['blend_name'];
+      $blend_desc=$_POST['blend_desc'];
+      $shopId=$id;
+      $stmt=$dbh->prepare('INSERT INTO blends(blend_name, blend_desc, shopId) values(:blend_name, :blend_desc, :shopId);');
+      $stmt->bindParam(':blend_name',$blend_name);
+      $stmt->bindParam(':blend_desc',$blend_desc);
+      $stmt->bindParam(':shopId', $shopId);
+      $stmt->execute();
+    };
+  };
+
+  if(isset($_POST['blend_name2'])){
+    if (empty($_POST['blend_name'])){
+      header('Location:shopsubmitted.php');
+    }else{
+      $blend_name2=$_POST['blend_name2'];
+      $blend_desc2=$_POST['blend_desc2'];
+      $shopId=$id;
+      $stmt=$dbh->prepare('INSERT INTO blends(blend_name, blend_desc, shopId) values(:blend_name, :blend_desc, :shopId);');
+      $stmt->bindParam(':blend_name',$blend_name2);
+      $stmt->bindParam(':blend_desc',$blend_desc2);
+      $stmt->bindParam(':shopId', $shopId);
+      $stmt->execute();
+    };
+  };
+
+  if(isset($_POST['blend_name3'])){
+    if (empty($_POST['blend_name'])){
+      header('Location:shopsubmitted.php');
+    }else{
+      $blend_name3=$_POST['blend_name3'];
+      $blend_desc3=$_POST['blend_desc3'];
+      $shopId=$id;
+      $stmt=$dbh->prepare('INSERT INTO blends(blend_name, blend_desc, shopId) values(:blend_name, :blend_desc, :shopId);');
+      $stmt->bindParam(':blend_name',$blend_name3);
+      $stmt->bindParam(':blend_desc',$blend_desc3);
+      $stmt->bindParam(':shopId', $shopId);
+      $stmt->execute();
+    };
+  };
+
+  if(isset($_POST['blend_name4'])){
+    if (empty($_POST['blend_name'])){
+      header('Location:shopsubmitted.php');
+    }else{
+      $blend_name4=$_POST['blend_name4'];
+      $blend_desc4=$_POST['blend_desc4'];
+      $shopId=$id;
+      $stmt=$dbh->prepare('INSERT INTO blends(blend_name, blend_desc, shopId) values(:blend_name, :blend_desc, :shopId);');
+      $stmt->bindParam(':blend_name',$blend_name4);
+      $stmt->bindParam(':blend_desc',$blend_desc4);
+      $stmt->bindParam(':shopId', $shopId);
+      $stmt->execute();
+      header('Location:shopsubmitted.php');
+    };
+  };
+
+};
 
 
 
@@ -78,34 +206,71 @@ echo $id;
   <div class="purple" id="login">
     <div class="container">
       <h1 class="white-text">ADD A SHOP</h1>
-
+      <?php
+      echo '<form action="addshop3.php?id='.$id.'" method="POST">'
+      ?>
       <div class="form-group white-text">
         <label class="white-text" for="website">METHODS OF BREWING:</label></br>
         <label class="checkbox-inline">
-          <input type="checkbox" id="Drip" value="Drip"> Drip
+          <input type="checkbox" id="drip" name="drip" value="Drip"> Drip
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="Espresso" value="Espresso"> Espresso
+          <input type="checkbox" id="espresso" name="espresso" value="Espresso"> Espresso
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="FrenchPress" value="French Press"> French Press
+          <input type="checkbox" id="frenchpress" name="frenchpress" value="French Press"> French Press
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="Chemex" value="Chemex"> Chemex
+          <input type="checkbox" id="chemex" name="chemex" value="Chemex"> Chemex
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="AeroPress" value="AeroPress"> AeroPress
+          <input type="checkbox" id="aeropress" name="aeropress" value="AeroPress"> AeroPress
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="Turkish" value="Turkish"> Turkish
+          <input type="checkbox" id="turkish" name="turkish" value="Turkish"> Turkish
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="PourOver" value="Pour Over"> Pour Over
+          <input type="checkbox" id="pourover" name="pourover" value="Pour Over"> Pour Over
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="ColdBrew" value="Cold Brew"> Cold Brew
+          <input type="checkbox" id="coldbrew" name="coldbrew" value="Cold Brew"> Cold Brew
         </label>
         </div>
+        <div class="form-group">
+        <label class="white-text" for="blend_name">BLEND NAME:</label>
+        <input type="text" class="form-control" id="blend_name" name="blend_name" placeholder="Enter Blend Name" />
+        </div>
+         <div class="form-group">
+        <label class="white-text" for="blend_desc">BLEND DESCRIPTION:</label>
+        <input type="text" class="form-control" id="blend_desc" name="blend_desc" placeholder="Enter Blend Description" />
+        </div>
+        <div class="form-group">
+        <label class="white-text" for="blend_name2">BLEND NAME:</label>
+        <input type="text" class="form-control" id="blend_name2" name="blend_name2" placeholder="Enter Blend Name" />
+        </div>
+         <div class="form-group">
+        <label class="white-text" for="blend_desc2">BLEND DESCRIPTION:</label>
+        <input type="text" class="form-control" id="blend_desc2" name="blend_desc2" placeholder="Enter Blend Description" />
+        </div>
+        <div class="form-group">
+        <label class="white-text" for="blend_name3">BLEND NAME:</label>
+        <input type="text" class="form-control" id="blend_name3" name="blend_name3" placeholder="Enter Blend Name" />
+        </div>
+         <div class="form-group">
+        <label class="white-text" for="blend_desc3">BLEND DESCRIPTION:</label>
+        <input type="text" class="form-control" id="blend_desc3" name="blend_desc3" placeholder="Enter Blend Description" />
+        </div>
+        <div class="form-group">
+        <label class="white-text" for="blend_name4">BLEND NAME:</label>
+        <input type="text" class="form-control" id="blend_name4" name="blend_name4" placeholder="Enter Blend Name" />
+        </div>
+         <div class="form-group">
+        <label class="white-text" for="blend_desc4">BLEND DESCRIPTION:</label>
+        <input type="text" class="form-control" id="blend_desc4" name="blend_desc4" placeholder="Enter Blend Description" />
+        </div>
+        <button type="submit" class="my-btn">Next</button>
+        </form>
+
     </div>
   </div>
 

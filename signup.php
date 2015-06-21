@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
   </head>
   <body>
     <nav class="navbar navbar-default">
-      <div class="container-fluid">
+      <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="index.php">
             <img alt="Brand" width="250" height="auto" src="images/logo.png">

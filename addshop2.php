@@ -6,18 +6,26 @@ include('times.php');
 
 session_start(); 
 
-$shop_name=$_GET['name'];
+$name=$_GET['name'];
 $stmt=$dbh->prepare('SELECT shopId FROM shops WHERE shop_name= :name');
-$stmt->bindParam(':name',$shop_name);
-$stmt->execute();
-$result = $stmt->fetchall(PDO::FETCH_ASSOC);
-foreach  ($result as $row) {
-$id=$row['shopId'];
-echo $id;
-}
+  $stmt->bindParam(':name',$name);
+  $stmt->execute();
+  $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+  foreach  ($result as $row) {
+  $id=$row['shopId'];
+};
+
 
 
 if ($_SERVER['REQUEST_METHOD']=='POST') {
+
+  $stmt=$dbh->prepare('SELECT shopId FROM shops WHERE shop_name= :name');
+  $stmt->bindParam(':name',$name);
+  $stmt->execute();
+  $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+  foreach  ($result as $row) {
+  $id=$row['shopId'];
+  
 
   if(isset($_POST['monday']) && $_POST['monday'] == 'MONDAY'){  
   $monday=$_POST['monday'];
@@ -30,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
   $stmt->bindParam(':time_closed',$monday_close);
   $stmt->bindParam(':shopId',$shopId);
   $stmt->execute();
-  }
+  };
 
   if(isset($_POST['tuesday']) && $_POST['tuesday'] == 'TUESDAY'){
   $tuesday=$_POST['tuesday'];
@@ -109,6 +117,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
   $stmt->bindParam(':shopId',$shopId);
   $stmt->execute();
   };
+  header('Location:addshop3.php?id='.$id);
+};
 };
 
 ?>
@@ -163,7 +173,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <div class="container">
       <h1 class="white-text">ADD A SHOP</h1>
 
-      <form action='addshop3.php' method="POST">
+      <?php
+      echo '<form action="addshop2.php?id='.$id.'&name='.$name.'" method="POST">'
+      ?>
         <div class="white-text">
           <label class="white-text" for="hours">HOURS:</label></br>
 
@@ -254,7 +266,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         </div>
         <button type="submit" class="my-btn">Next</button>
       </form>
-
 
     </div>
   </div>

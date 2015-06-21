@@ -1,45 +1,33 @@
 <?php
-// $user="root";
-// $pass="root";
-// $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
-error_reporting(E_ALL ^ E_DEPRECATED);
+$user="root";
+$pass="root";
+$dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 
+session_start(); 
 
-$connection = mysql_connect("localhost","root", "root"); 
-if(!$connection) { 
-   die("Database connection failed: " . mysql_error()); 
-}else{
-   $db_select = mysql_select_db("coffeeshopper",$connection); 
-   if (!$db_select) { 
-       die("Database selection failed:: " . mysql_error()); 
-   } 
-}
-
-
-//Start the Session
-session_start();
- // require('connect.php');
-//3. If the form is submitted or not.
-//3.1 If the form is submitted
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-//3.1.1 Assigning posted values to variables.
-$username = $_POST['username'];
-$password = $_POST['password'];
-//3.1.2 Checking the values are existing in the database or not
-$query = "SELECT * FROM `users` WHERE username='$username' and password='$password'";
-$result = mysql_query($query) or die(mysql_error());
-$count = mysql_num_rows($result);
+      $cityId=$_POST['cityId'];
+      $shop_name=$_POST['shop_name']; //get POST values
+      $shop_location=$_POST['shop_location'];
+      $phone_number=$_POST['phone_number'];
+      $website=$_POST['website'];
+      $statusId=2;
+      $stmt=$dbh->prepare('INSERT INTO shops(shop_name, shop_location, website, statusId, cityId, phone_number) values(:shop_name, :shop_location, :website, :statusId, :cityId, :phone_number);');
+      $stmt->bindParam(':cityId',$cityId);
+      $stmt->bindParam(':shop_name',$shop_name);
+      $stmt->bindParam(':shop_location',$shop_location);
+      $stmt->bindParam(':phone_number',$phone_number);
+      $stmt->bindParam(':website',$website);
+      $stmt->bindParam(':statusId',$statusId);
+      $stmt->execute();
+      header('Location:addshop2.php?name='.$shop_name);
+}
 
-        //3.1.2 If the posted values are equal to the database values, then session will be created for the user.
-if ($count == 1){
-$_SESSION['username'] = $username;
-header('Location:index.php');
-}else{
-//3.1.3 If the login credentials doesn't match, he will be shown with an error message.
- echo "Invalid Login Credentials.";
-}
-}
+
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,12 +43,13 @@ header('Location:index.php');
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
 
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  end if]-->
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -87,21 +76,13 @@ header('Location:index.php');
 
   <div class="purple" id="login">
     <div class="container">
-      <h1 class="white-text">LOGIN</h1>
-      <form action="" method="POST">
-        <div class="form-group">
-          <label class="white-text" for="username">USERNAME</label>
-          <input type="text" class="form-control" id="username" name="username" placeholder="Enter email" required/>
-        </div>
-        <div class="form-group">
-          <label class="white-text" for="password">PASSWORD</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required/>
-        </div>
-        <button type="submit" class="my-btn">SUBMIT</button>
-      </form>
+        <div class="nologin white-text">
+          <h1>Thanks for submitting a new shop!</h1>
+          <h2>It will be posted to the website upon approval. Feel free to explore other shops in the meantime.</h2>      
+          <button class="col-md-4 col-md-offset-4 my-btn" onClick="window.location.href='cities.php'">GO TO CITIES</button>
+      </div>
     </div>
   </div>
-  
 
     <div class="row" id="footer">
       <div class="container">
@@ -113,12 +94,13 @@ header('Location:index.php');
       <li><a href="login.php">LOGIN</a></li>
       </div>
       <button class="col-md-2 my-btn" onClick="window.location.href='admin.php'">ADMIN LOGIN</button>
-      </div>
+      </div> 
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+
   </body>
 </html>
