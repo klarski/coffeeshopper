@@ -3,41 +3,6 @@ $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 
-$id=$_GET['id'];
-$shopId=$id;
-// $name=$_GET['name'];
-
-$uploadDir = 'uploads/';
-
-if ($_SERVER['REQUEST_METHOD']=='POST') {
-  setImg();
-  $shopId=$_POST['shopId'];
-  $imgUrl=$_FILES['userfile']['name'];
-  $filePath = $uploadDir.$imgUrl;
-  $stmt=$dbh->prepare('INSERT INTO shop_images(shopId, image_file) values(:shopId, :image_file);');
-  $stmt->bindParam(':shopId',$shopId);
-  $stmt->bindParam(':image_file',$filePath);
-  $stmt->execute();
-  echo "Thank you";
-}
-
-function setImg(){
-      $type = str_replace("image/", ".", $_FILES['userfile']['type']);
-
-      if ($type == ".jpeg" || $type == ".png") {
-        $setimg = "uploads/";
-        $imgName = $_FILES['userfile']['name'];
-        $tmp= $_FILES['userfile']['tmp_name'];
-        $img = $setimg.$imgName;
-        move_uploaded_file($tmp, $img);
-        return $img;
-         }else{
-        echo "<h1>Nope</h1>";
-        // $img = "img/fail.jpg";
-        // return $img;
-      }
-    }
-
 ?>
 
 

@@ -82,28 +82,28 @@ echo $id;
       <div class="form-group white-text">
         <label class="white-text" for="website">METHODS OF BREWING:</label></br>
         <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox1" value="Drip"> Drip
+          <input type="checkbox" id="Drip" value="Drip"> Drip
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox2" value="Espresso"> Espresso
+          <input type="checkbox" id="Espresso" value="Espresso"> Espresso
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="French Press"> French Press
+          <input type="checkbox" id="FrenchPress" value="French Press"> French Press
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="Chemex"> Chemex
+          <input type="checkbox" id="Chemex" value="Chemex"> Chemex
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="AeroPress"> AeroPress
+          <input type="checkbox" id="AeroPress" value="AeroPress"> AeroPress
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="Turkish"> Turkish
+          <input type="checkbox" id="Turkish" value="Turkish"> Turkish
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="PourOver"> Pour Over
+          <input type="checkbox" id="PourOver" value="Pour Over"> Pour Over
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox3" value="ColdBrew"> Cold Brew
+          <input type="checkbox" id="ColdBrew" value="Cold Brew"> Cold Brew
         </label>
         </div>
     </div>

@@ -1,3 +1,45 @@
+<?php
+// $user="root";
+// $pass="root";
+// $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
+error_reporting(E_ALL ^ E_DEPRECATED);
+
+
+$connection = mysql_connect("localhost","root", "root"); 
+if(!$connection) { 
+   die("Database connection failed: " . mysql_error()); 
+}else{
+   $db_select = mysql_select_db("coffeeshopper",$connection); 
+   if (!$db_select) { 
+       die("Database selection failed:: " . mysql_error()); 
+   } 
+}
+
+
+//Start the Session
+session_start();
+ // require('connect.php');
+//3. If the form is submitted or not.
+//3.1 If the form is submitted
+if ($_SERVER['REQUEST_METHOD']=='POST') {
+//3.1.1 Assigning posted values to variables.
+$username = $_POST['username'];
+$password = $_POST['password'];
+//3.1.2 Checking the values are existing in the database or not
+$query = "SELECT * FROM `admin` WHERE username='$username' and password='$password'";
+$result = mysql_query($query) or die(mysql_error());
+$count = mysql_num_rows($result);
+
+        //3.1.2 If the posted values are equal to the database values, then session will be created for the user.
+if ($count == 1){
+$_SESSION['username'] = $username;
+header('Location:admindash.php');
+}else{
+//3.1.3 If the login credentials doesn't match, he will be shown with an error message.
+ echo "Invalid Login Credentials.";
+}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -40,20 +82,19 @@
   <div class="purple" id="login">
     <div class="container">
       <h1 class="white-text">ADMIN LOGIN</h1>
-      <form>
+      <form method="POST" action="">
         <div class="form-group">
-          <label class="white-text" for="exampleInputEmail1">EMAIL ADDRESS</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required/>
+          <label class="white-text" for="username">USERNAME</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Enter email" required/>
         </div>
         <div class="form-group">
-          <label class="white-text" for="exampleInputPassword1">PASSWORD</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required/>
+          <label class="white-text" for="password">PASSWORD</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required/>
         </div>
         <button type="submit" class="my-btn">SUBMIT</button>
       </form>
     </div>
   </div>
-  
 
     <div class="row" id="footer">
       <div class="container">

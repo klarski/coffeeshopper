@@ -5,24 +5,36 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
 
 $id=$_GET['id'];
 $shopId=$id;
-// $name=$_GET['name'];
+$username=$_GET['username'];
 
-session_start(); 
-// $_SESSION['username']=$_GET['username'];
+// session_start(); 
+
 
 if ($_SERVER['REQUEST_METHOD']=='POST') {
+  if(isset($_POST)){
+  $stmt = $dbh->prepare('SELECT userId FROM users WHERE username=:username;');
+  $stmt->bindParam(':username',$username);
+  $stmt->execute();
+  $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+      foreach  ($result as $row) {
+        $uid=$row['userId'];
+    } 
+  }
   $shopId=$_POST['shopId'];
+  $userId=$uid;
+  $review=$_POST['review'];
   $atmos_rating=$_POST['atmos_rating'];
   $taste_rating=$_POST['taste_rating'];
-  $review=$_POST['review'];
-  // $username=$_GET['username'];
-  $stmt=$dbh->prepare('INSERT INTO reviews(shopId, atmos_rating, taste_rating, review, userId) values(:shopId, :atmos_rating, :taste_rating, :review, :userId);');
+  $review_date=date('Y-m-d');;
+  $stmt=$dbh->prepare('INSERT INTO reviews(shopId, userId, review, atmos_rating, taste_rating, review_date) values(:shopId, :userId, :review, :atmos_rating, :taste_rating, :review_date);');
   $stmt->bindParam(':shopId',$shopId);
+  $stmt->bindParam(':userId',$userId);
+  $stmt->bindParam(':review',$review);
   $stmt->bindParam(':atmos_rating',$atmos_rating);
   $stmt->bindParam(':taste_rating',$taste_rating);
-  $stmt->bindParam(':review',$review);
-  // $stmt->bindParam(':username',$username);
+  $stmt->bindParam(':review_date',$review_date);
   $stmt->execute();
+  header('Location:reviewthanks.php');
 }
 
 ?>
@@ -44,13 +56,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     <!-- Add fancyBox -->
-    <link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
-    <script type="text/javascript" src="/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
     <!-- Optionally add helpers - button, thumbnail and/or media -->
-    <link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
-    <script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
-    <script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+    <link rel="stylesheet" href="fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+    <script type="text/javascript" src="fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
 
     <link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media=
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -65,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
 <?php
   echo '<h2>WRITE A REVIEW:</h2>';
-  echo '<form action="reviewthanks.php" method="POST" enctype="multipart/form-data">';
+  echo '<form action="addreview.php?id='.$id.'&username='.$username.'" method="POST" enctype="multipart/form-data">';
   echo '<div class="form-group">';
   echo '<label>ATMOSPHERE:</label>';
   echo '<select class="form-control" id="atmos_rating" name="atmos_rating" required>';
@@ -86,10 +98,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
   echo '</div>';
   echo '<div class="from-group">';
   echo '<label>WRITE REVIEW:</label>';
-  echo '<textarea name="review" id="review">Enter text here...</textarea>';
+  echo '<textarea class="form-control" name="review" id="review">Enter text here...</textarea>';
   echo '<div>';
   echo '<input name="shopId" id="shopId" type="text" value="'.$id.'"hidden>';
-  echo '<input class="my-btn popup-btn" type="submit" value="Upload Image" name="submit">';
+  echo '<input class="my-btn popup-btn" type="submit" value="Submit Review" name="submit">';
   echo '</form>';
 ?>
     </div>

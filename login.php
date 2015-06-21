@@ -33,7 +33,7 @@ $count = mysql_num_rows($result);
         //3.1.2 If the posted values are equal to the database values, then session will be created for the user.
 if ($count == 1){
 $_SESSION['username'] = $username;
-header('Location:login-home.php');
+header('Location:index.php');
 }else{
 //3.1.3 If the login credentials doesn't match, he will be shown with an error message.
  echo "Invalid Login Credentials.";
@@ -83,30 +83,17 @@ header('Location:login-home.php');
   <div class="purple" id="login">
     <div class="container">
       <h1 class="white-text">LOGIN</h1>
-      <form  action="" method="POST">
+      <form action="" method="POST">
         <div class="form-group">
-          <label class="white-text" for="exampleInputEmail1">USERNAME</label>
+          <label class="white-text" for="username">USERNAME</label>
           <input type="text" class="form-control" id="username" name="username" placeholder="Enter email" required/>
         </div>
         <div class="form-group">
-          <label class="white-text" for="exampleInputPassword1">PASSWORD</label>
+          <label class="white-text" for="password">PASSWORD</label>
           <input type="password" class="form-control" id="password" name="password" placeholder="Password" required/>
         </div>
         <button type="submit" class="my-btn">SUBMIT</button>
       </form>
-
-      <?php
-       
-
-        //3.1.4 if the user is logged in Greets the user with message
-        if (isset($_SESSION['username'])){
-        $username = $_SESSION['username'];
-        
-        // echo "Hi ".$username." ";
-        // echo "This is the Members Area";
-        }
-
-      ?>
     </div>
   </div>
   

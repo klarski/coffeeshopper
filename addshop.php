@@ -80,8 +80,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
       <?php
 
-        if(!isset($_SESSION['username'])){ // If session is not set that redirect to Login Page                            {
-           echo '<a href="login.php">Please login to add a new shop</a>';
+        if(!isset($_SESSION['username'])){ // If session is not set that redirect to Login Page
+          echo '<div class="nologin white-text">';       
+          echo '<h3 class="col=md-12">Please login to add a new shop<h3>';
+          echo '<button class="col-md-4 col-md-offset-4 my-btn" onClick="window.location.href="login.php">LOGIN</button>';
+          echo "<h3 class='col-md-12'>Don't have an account? Signup!</h3></br>";
+          echo '<button class="col-md-4 col-md-offset-4 my-btn" onClick="window.location.href="signup.php">SIGN UP</button></div>';
        }else{
           echo <<<EOL
           <form action="addshop.php" method="POST">'

@@ -21,16 +21,51 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
     <link href="css/main.css" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
+
+      var geocoder;
+      var map;
       function initialize() {
-        var mapCanvas = document.getElementById('map-canvas');
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(37.775341, -122.419061);
         var mapOptions = {
-          center: new google.maps.LatLng(37.775341, -122.419061),
           zoom: 12,
+          center: latlng,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
-        var map = new google.maps.Map(mapCanvas, mapOptions)
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
       }
-      google.maps.event.addDomListener(window, 'load', initialize);
+
+      function codeAddress() {
+        var address =[];
+        // address.push("6640 Akers Mill Rd SE")
+        for(i=1; i<5; i++){
+        var pushaddresses= document.getElementById('address').innerHTML + ", San Francisco, CA";
+        address.push(pushaddresses);
+        i++;
+        };
+
+        console.log(address);
+        
+        for(i=1; i<address.length; i++){
+        geocoder.geocode( { 'address': address[0]}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+          } else {
+            console.log("this is not working");
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+          i++;
+          console.log(address[i]);
+
+        });
+      };
+    }
+
+
     </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -40,7 +75,7 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body onload="initialize(); codeAddress(); ">
     <nav class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
@@ -79,13 +114,17 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
         $stmt = $dbh->prepare('SELECT * FROM shops WHERE (cityId=3 AND statusId=1);');
         $stmt->execute();
         $result = $stmt->fetchall(PDO::FETCH_ASSOC);
+        $shopnumber= 0;
 
         foreach  ($result as $row) {
             echo '<div class="shop-list">';
             echo '<h2>'.$row['shop_name'].'</h2>';
-            echo '<p>'.$row['shop_location'].'</p>';
+            echo '<p id="address">'.$row['shop_location'].'</p>';
+            echo '<input id="address'.$shopnumber.'" type="textbox" value="'.$row['shop_location'].', San Francisco, CA" hidden>';
             echo '<p>'.$row['phone_number'].'</p>';
-            echo '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
+            echo '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'&city='.$row['cityId'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
+            $shopnumber+=1;
+            // echo '<p>'.$shopnumber.'</p>';
             echo '</div>';
         }
 

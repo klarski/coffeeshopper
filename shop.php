@@ -10,6 +10,10 @@ $name=$_GET['name'];
 $name= strtoupper($name);
 $cityid=$_GET['city'];
 
+if(isset($_SESSION['username'])){
+$username= $_SESSION['username'];
+}
+
 $city="";
 if($cityid==1){
   $city="atlanta";
@@ -36,23 +40,24 @@ if($cityid==1){
     <link href="css/main.css" rel="stylesheet">
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
     <!-- Add fancyBox -->
-    <link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
-    <script type="text/javascript" src="/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
     <!-- Optionally add helpers - button, thumbnail and/or media -->
-    <link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
-    <script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
-    <script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+    <link rel="stylesheet" href="fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+    <script type="text/javascript" src="fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
 
-    <link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
-    <script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+    <link rel="stylesheet" href="fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
 
     <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
 
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -93,7 +98,7 @@ if($cityid==1){
         ?>
         <div class="row col-md-offset-3">
         <?php 
-        echo '<a href="'.$city.'.php"><button class="my-btn col-md-offset-3">BACK TO LIST OF SHOPS</button></a>'
+        echo '<a href="'.$city.'.php"><button class="my-btn col-md-offset-2">BACK TO LIST OF SHOPS</button></a>'
         ?>
         </div>
       </div>   
@@ -164,8 +169,13 @@ if($cityid==1){
     <div class="container section-padding">
       <h2 class="white-text col-md-4">IMAGE GALLERY</h2>
       <?php
+        if(isset($_SESSION['username'])){
+          echo '<button class="col-md-2 col-md-offset-5 my-btn various fancybox.iframe" href="addimage.php?id='.$id.'">ADD AN IMAGE</button>';
+          }else{
+          $onClickLocation="window.location.href='login.php'";
+          echo '<button class="col-md-3 col-md-offset-4 my-btn" onClick="'.$onClickLocation.'">LOGIN TO ADD AN IMAGE</button>';
 
-      echo '<button class="col-md-2 col-md-offset-5 my-btn various fancybox.iframe" href="addimage.php?id='.$id.'">ADD AN IMAGE</button>';
+        }
       ?>
       
       <div class="row col-md-12 carousel">
@@ -193,8 +203,13 @@ if($cityid==1){
          <div class="row">
       <h2 class="white-text col-md-7">REVIEWS</h2>
       <?php
+        if(isset($_SESSION['username'])){
+          echo '<button class="col-md-2 col-md-offset-2 my-btn various fancybox.iframe" href="addreview.php?id='.$id.'&username='.$username.'">ADD A REVIEW</button>';
+          }else{
+          $onClickLocation="window.location.href='login.php'";
+          echo '<button class="col-md-3 col-md-offset-1 my-btn" onClick="'.$onClickLocation.'">LOGIN TO WRITE REVIEW</button>';
 
-      echo '<button class="col-md-2 col-md-offset-2 my-btn various fancybox.iframe" href="addreview.php?id='.$id.'">ADD A REVIEW</button>';
+        }
       ?>
       </div>
       <?php
@@ -206,6 +221,7 @@ if($cityid==1){
 
         foreach  ($result as $row) {
           echo '<h4>Submitted by: '.$row['username'].'</h4>';
+          echo '<h4>Review Date: '.$row['review_date'].'</h4>';
 
           if ($row['taste_rating'] > 4) {
               echo '<span> TASTE: <img height=15 src="images/5star.png"></span></br>';

@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <div class="container">
       <h1 class="white-text">ADD A SHOP</h1>
 
-      <form action='addshop3.php'method="POST">
+      <form action='addshop3.php' method="POST">
         <div class="white-text">
           <label class="white-text" for="hours">HOURS:</label></br>
 
