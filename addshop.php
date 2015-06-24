@@ -1,9 +1,11 @@
 <?php
+session_start(); 
 $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
+include_once("analyticstracking.php");
 
-session_start(); 
+
 
 if ($_SERVER['REQUEST_METHOD']=='POST') {
       $cityId=$_POST['cityId'];
@@ -88,9 +90,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         if(!isset($_SESSION['username'])){ // If session is not set that redirect to Login Page
           echo '<div class="nologin white-text">';       
           echo '<h3 class="col=md-12">Please login to add a new shop<h3>';
-          echo '<button class="col-md-4 col-md-offset-4 my-btn" onClick="window.location.href="login.php">LOGIN</button>';
+          echo '<button class="col-md-4 col-md-offset-4 my-btn" onClick="window.location.href=\'login.php\'">LOGIN</button>';
           echo "<h3 class='col-md-12'>Don't have an account? Signup!</h3></br>";
-          echo '<button class="col-md-4 col-md-offset-4 my-btn" onClick="window.location.href="signup.php">SIGN UP</button></div>';
+          echo '<button class="col-md-4 col-md-offset-4 my-btn" onClick="window.location.href=\'signup.php\'">SIGN UP</button></div>';
        }else{
           echo <<<EOL
           <form action="addshop.php" method="POST">'
@@ -105,23 +107,23 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
             </div>
 
             <div class="form-group">
-              <label class="white-text" for="shop_name">SHOP NAME:</label>
+              <label class="white-text" for="shop_name">SHOP NAME: <i>*Required Field</i></label>
               <input type="text" class="form-control" id="shop_name" name="shop_name" placeholder="Enter Shop Name" required/>
             </div>
 
             <div class="form-group">
-              <label class="white-text" for="shop_location">ADDRESS:</label>
-              <input type="text" class="form-control" id="shop_location" name="shop_location" placeholder="Enter Shop Location" required/>
+              <label class="white-text" for="shop_location">ADDRESS: (Street only, City and State are not needed) <i>*Required Field</i> </label>
+              <input type="text" class="form-control" id="shop_location" name="shop_location" placeholder="1234 Main Street" required/>
             </div>
 
             <div class="form-group">
               <label class="white-text" for="phone_number">PHONE NUMBER:</label>
-              <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Enter Shop Phone Number" required/>
+              <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="XXX-XXX-XXXX"/>
             </div>
 
             <div class="form-group">
               <label class="white-text" for="website">WEBSITE:</label>
-              <input type="url" class="form-control" id="website" name="website" pattern="https?://.+" placeholder="Enter Website URL - http://website.com" />
+              <input type="url" class="form-control" id="website" name="website" pattern="https?://.+" placeholder="http://website.com" />
             </div>
 
             <button type="submit" class="my-btn">Next</button>

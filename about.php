@@ -1,5 +1,6 @@
 <?php
 session_start(); 
+include_once("analyticstracking.php");
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +53,7 @@ session_start();
     </nav>
 
       <div id="about" class="purple row">
-        <img class="col-md-6" src="images/about.jpg" width="100%">
+        <img class="col-md-6" src="images/about.jpg">
         <div class="white-text container ">
           <h1>ABOUT</h1>
           <p>Coffee as coffee, con panna, seasonal mazagran blue mountain dark organic. Ut java percolator, foam caffeine, pumpkin spice cinnamon viennese froth plunger pot viennese. Decaffeinated macchiato, crema aged id acerbic cortado blue mountain froth.</p>

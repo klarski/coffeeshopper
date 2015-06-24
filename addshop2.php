@@ -1,10 +1,12 @@
 <?php
+session_start(); 
 $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 include('times.php');
+include_once("analyticstracking.php");
 
-session_start(); 
+
 
 $name=$_GET['name'];
 $stmt=$dbh->prepare('SELECT shopId FROM shops WHERE shop_name= :name');

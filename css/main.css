@@ -191,6 +191,7 @@ h1 ,h2, h3, h4, h5, a, .my-btn, label{
     float:left; 
     position:relative;
 }  
+
 .city-title{  
     position:absolute; 
     margin-top: -68px;
@@ -247,7 +248,8 @@ h2.title_content{
  }
 
  .shop-list button{
- 	margin: 0 23%;
+ 	display:block;
+    margin:auto;
  }
 
  #image-gallery img{
@@ -367,4 +369,53 @@ a:visited, a:hover{
 
 .mapModal{
 	text-align: center;
+}
+
+@media screen and (max-width: 991px) {
+    #about img {
+        display: none;
+    }
+    .jumbotron {
+    	background-size: 125% auto;
+
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .jumbotron {
+    	background-size: 150% auto;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .jumbotron {
+    	background-size: 250% auto;
+    }
+
+    .city { 
+	    width: 70%;
+	    margin-left: 60px;
+}
+	.city img{
+		width: 100%;
+	}
+	.box-btn{
+		width: 74%;
+		margin-left: 47px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+    #about {
+        padding: 20px;
+    }
+
+    .shop-list{
+    	margin-left: 10%;
+    	width: 70%;
+    }
+    .shop-list .my-btn{
+    	display:block;
+    	margin:auto;
+    }
 }

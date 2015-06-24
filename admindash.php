@@ -1,8 +1,10 @@
 <?php
+session_start(); 
+
 $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
-session_start(); 
+include_once("analyticstracking.php");
 
 ?>
 
@@ -77,7 +79,7 @@ session_start();
         $result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
         foreach  ($result as $row) {
-            echo '<div class="col-md-3">';
+            echo '<div class="col-md-4">';
             echo '<div class="panel panel-default">';
             echo '<div class="panel-heading">'.$row['shop_name'].'</div>';
             echo '<div class="panel-body">';

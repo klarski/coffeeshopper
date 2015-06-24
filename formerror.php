@@ -4,29 +4,6 @@ $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 include_once("analyticstracking.php");
-
-
-
-if ($_SERVER['REQUEST_METHOD']=='POST') {
-      $cityId=$_POST['cityId'];
-      $shop_name=$_POST['shop_name']; //get POST values
-      $shop_location=$_POST['shop_location'];
-      $phone_number=$_POST['phone_number'];
-      $website=$_POST['website'];
-      $statusId=2;
-      $stmt=$dbh->prepare('INSERT INTO shops(shop_name, shop_location, website, statusId, cityId, phone_number) values(:shop_name, :shop_location, :website, :statusId, :cityId, :phone_number);');
-      $stmt->bindParam(':cityId',$cityId);
-      $stmt->bindParam(':shop_name',$shop_name);
-      $stmt->bindParam(':shop_location',$shop_location);
-      $stmt->bindParam(':phone_number',$phone_number);
-      $stmt->bindParam(':website',$website);
-      $stmt->bindParam(':statusId',$statusId);
-      $stmt->execute();
-      header('Location:addshop2.php?name='.$shop_name);
-}
-
-
-
 ?>
 
 
@@ -83,11 +60,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 
   <div class="purple" id="login">
     <div class="container">
-        <div class="nologin white-text">
-          <h1>Thanks for submitting a new shop!</h1>
-          <h2>It will be posted to the website upon approval. Feel free to explore other shops in the meantime.</h2>      
-          <button class="col-md-4 col-md-offset-4 my-btn" onClick="window.location.href='cities.php'">GO TO CITIES</button>
-      </div>
+
+        <div class="nologin white-text">       
+        <h3 class="col=md-12">Sorry, we couldn't find an account with that username and/or password.<h3>
+        <button class="col-md-4 col-md-offset-4 my-btn" onClick="window.location.href='login.php'">TRY LOGGING IN AGAIN</button>
+        <h3 class='col-md-12'>Don't have an account? Signup!</h3></br>
+        <button class="col-md-4 col-md-offset-4 my-btn" onClick="window.location.href='signup.php'">SIGN UP</button></div>
     </div>
   </div>
 

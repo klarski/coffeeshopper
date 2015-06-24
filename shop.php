@@ -179,7 +179,6 @@ if($cityid==1){
           }else{
           $onClickLocation="window.location.href='login.php'";
           echo '<button class="col-md-3 col-md-offset-4 my-btn" onClick="'.$onClickLocation.'">LOGIN TO ADD AN IMAGE</button>';
-
         }
       ?>
       
@@ -344,3 +343,4 @@ if($cityid==1){
     <script type="text/javascript" src="slick/slick.min.js"></script>
   </body>
 </html>
+<?php include_once("analyticstracking.php"); ?>

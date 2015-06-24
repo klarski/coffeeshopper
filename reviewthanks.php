@@ -2,7 +2,7 @@
 $user="root";
 $pass="root";
 $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
-
+include_once("analyticstracking.php");
 ?>
 
 
