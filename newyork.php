@@ -34,38 +34,6 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
         }
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
       }
-
-      function codeAddress() {
-        var address =[];
-        // address.push("6640 Akers Mill Rd SE")
-        for(i=1; i<5; i++){
-        var pushaddresses= document.getElementById('address').innerHTML + ", New York, NY";
-        address.push(pushaddresses);
-        i++;
-        };
-
-        console.log(address);
-        
-        for(i=1; i<address.length; i++){
-        geocoder.geocode( { 'address': address[0]}, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            map.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location
-            });
-          } else {
-            console.log("this is not working");
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-          i++;
-          console.log(address[i]);
-
-        });
-      };
-    }
-
-
     </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -119,18 +87,22 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
         $stmt = $dbh->prepare('SELECT * FROM shops WHERE (cityId=2 AND statusId=1);');
         $stmt->execute();
         $result = $stmt->fetchall(PDO::FETCH_ASSOC);
-        $shopnumber= 0;
+        $addressData = array();
+        $nameData = array();
+        $linkData = array();
 
         foreach  ($result as $row) {
             echo '<div class="shop-list">';
             echo '<h2>'.$row['shop_name'].'</h2>';
             echo '<p id="address">'.$row['shop_location'].'</p>';
-            echo '<input id="address'.$shopnumber.'" type="textbox" value="'.$row['shop_location'].', New York, NY" hidden>';
             echo '<p>'.$row['phone_number'].'</p>';
             echo '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'&city='.$row['cityId'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
-            $shopnumber+=1;
-            // echo '<p>'.$shopnumber.'</p>';
             echo '</div>';
+            $shoplink = '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'&city='.$row['cityId'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
+            $fullAddress = $row['shop_location'].',</br> New York, NY';
+            array_push($nameData, $row['shop_name']);
+            array_push($addressData, $fullAddress);
+            array_push($linkData, $shoplink);
         }
 
         ?>
@@ -150,6 +122,42 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
       <button class="col-md-2 my-btn" onClick="window.location.href='admin.php'">ADMIN LOGIN</button>
     </div>
     </div>
+     <script type="text/javascript">
+    var address =  <?php echo json_encode($addressData); ?>;
+    var shopName = <?php echo json_encode($nameData); ?>;
+    var shopLink = <?php echo json_encode($linkData); ?>;
+    console.log(shopLink);
+
+    function codeAddress() {
+        for(i=0; i<address.length; i++){
+          a=0;    
+        geocoder.geocode( { 'address': address[i]}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+            });
+            console.log("This is the result, " + shopName[a]);
+            var infowindow = new google.maps.InfoWindow({
+                content: '<div class="mapModal"><h3>'+shopName[a]+'</h3><p>'+address[a]+'</p>'+shopLink[a]+'</div>',
+                maxWidth: 300
+            });
+            a++;
+            google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+            google.maps.event.addDomListener(window, 'load', initialize);
+          });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+          i++;
+        });
+      };
+    }
+
+   
+    </script>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

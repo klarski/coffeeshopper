@@ -93,6 +93,8 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
         $stmt->execute();
         $result = $stmt->fetchall(PDO::FETCH_ASSOC);
         $addressData = array();
+        $nameData = array();
+        $linkData = array();
 
         foreach  ($result as $row) {
             echo '<div class="shop-list">';
@@ -101,8 +103,11 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
             echo '<p>'.$row['phone_number'].'</p>';
             echo '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'&city='.$row['cityId'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
             echo '</div>';
-            array_push($addressData, $row['shop_location']);
-            
+            $fullAddress= $row['shop_location'].',</br> Atlanta, GA';
+            $shoplink = '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'&city='.$row['cityId'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
+            array_push($nameData, $row['shop_name']);
+            array_push($addressData, $fullAddress);
+            array_push($linkData, $shoplink);
         }
 
         ?>
@@ -124,10 +129,13 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
     </div>
     <script type="text/javascript">
     var address =  <?php echo json_encode($addressData); ?>;
-    console.log(address);
+    var shopName = <?php echo json_encode($nameData); ?>;
+    var shopLink = <?php echo json_encode($linkData); ?>;
+    console.log(shopLink);
 
     function codeAddress() {
         for(i=0; i<address.length; i++){
+          a=0;    
         geocoder.geocode( { 'address': address[i]}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             map.setCenter(results[0].geometry.location);
@@ -135,6 +143,16 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
                 map: map,
                 position: results[0].geometry.location,
             });
+            console.log("This is the result, " + shopName[a]);
+            var infowindow = new google.maps.InfoWindow({
+                content: '<div class="mapModal"><h3>'+shopName[a]+'</h3><p>'+address[a]+'</p>'+shopLink[a]+'</div>',
+                maxWidth: 300
+            });
+            a++;
+            google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+            google.maps.event.addDomListener(window, 'load', initialize);
+          });
           } else {
             alert('Geocode was not successful for the following reason: ' + status);
           }
@@ -142,6 +160,8 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
         });
       };
     }
+
+   
     </script>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
