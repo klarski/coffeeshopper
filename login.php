@@ -25,8 +25,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 //3.1.1 Assigning posted values to variables.
 $username = $_POST['username'];
 $password = $_POST['password'];
+$hash = md5($password);
 //3.1.2 Checking the values are existing in the database or not
-$query = "SELECT * FROM `users` WHERE username='$username' and password='$password'";
+$query = "SELECT * FROM `users` WHERE username='$username' and password='$hash'";
 $result = mysql_query($query) or die(mysql_error());
 $count = mysql_num_rows($result);
 

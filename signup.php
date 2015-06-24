@@ -12,13 +12,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
   $email=$_POST['email'];
   $username=$_POST['username'];
   $password=$_POST['password'];
+  $hash=md5($password);
   $stmt=$dbh->prepare('INSERT INTO users(firstname, lastname, email, username, password) values(:firstname, :lastname, :email, :username, :password);');
   $stmt->bindParam(':firstname',$firstname);
   $stmt->bindParam(':lastname',$lastname);
   $stmt->bindParam(':email',$email);
   $stmt->bindParam(':username',$username);
-  $stmt->bindParam(':password',$password);
+  $stmt->bindParam(':password',$hash);
   $stmt->execute();
+  header('Location:signup-complete.php');
 }
 ?>
 
@@ -52,14 +54,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="index.php">HOME</a></li>
-          <li><a href="about.php">ABOUT</a></li>
-          <li><a href="cities.php">CITIES</a></li>
-          <li><a href="addshop.php">ADD A SHOP</a></li>
           <?php  if(!isset($_SESSION['username'])){
+          echo '<li><a href="index.php">HOME</a></li>';
+          echo '<li><a href="about.php">ABOUT</a></li>';
+          echo '<li><a href="cities.php">CITIES</a></li>';
+          echo '<li><a href="addshop.php">ADD A SHOP</a></li>';
           echo '<li><a href="signup.php">SIGN UP</a></li>';
           echo '<li><a href="login.php">LOGIN</a></li>'; 
           }else{
+          echo '<li class="welcome">Hello, '.$_SESSION['username'].'!</li>';
+          echo '<li><a href="index.php">HOME</a></li>';
+          echo '<li><a href="about.php">ABOUT</a></li>';
+          echo '<li><a href="cities.php">CITIES</a></li>';
+          echo '<li><a href="addshop.php">ADD A SHOP</a></li>';
           echo '<li><a href="logout.php">LOGOUT</a></li>';
           }?>
         </ul>
@@ -69,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <div class="purple" id="login">
     <div class="container">
       <h1 class="white-text">SIGN UP</h1>
-      <form enctype="multipart/form-data" action="signup-complete.php" method="POST">
+      <form enctype="multipart/form-data" action="signup.php" method="POST">
         <div class="form-group">
           <label class="white-text" for="firstname">FIRST NAME</label>
           <input type="firstname" class="form-control" id="firstname" name="firstname" placeholder="Enter first name" required/>

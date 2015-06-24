@@ -146,7 +146,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
       $stmt->bindParam(':blend_desc',$blend_desc4);
       $stmt->bindParam(':shopId', $shopId);
       $stmt->execute();
-      header('Location:shopsubmitted.php');
     };
   };
 
@@ -189,14 +188,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="index.php">HOME</a></li>
-          <li><a href="about.php">ABOUT</a></li>
-          <li><a href="cities.php">CITIES</a></li>
-          <li><a href="addshop.php">ADD A SHOP</a></li>
           <?php  if(!isset($_SESSION['username'])){
+          echo '<li><a href="index.php">HOME</a></li>';
+          echo '<li><a href="about.php">ABOUT</a></li>';
+          echo '<li><a href="cities.php">CITIES</a></li>';
+          echo '<li><a href="addshop.php">ADD A SHOP</a></li>';
           echo '<li><a href="signup.php">SIGN UP</a></li>';
           echo '<li><a href="login.php">LOGIN</a></li>'; 
           }else{
+          echo '<li class="welcome">Hello, '.$_SESSION['username'].'!</li>';
+          echo '<li><a href="index.php">HOME</a></li>';
+          echo '<li><a href="about.php">ABOUT</a></li>';
+          echo '<li><a href="cities.php">CITIES</a></li>';
+          echo '<li><a href="addshop.php">ADD A SHOP</a></li>';
           echo '<li><a href="logout.php">LOGOUT</a></li>';
           }?>
         </ul>

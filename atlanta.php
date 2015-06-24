@@ -35,38 +35,6 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
         }
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
       }
-
-      function codeAddress() {
-        var address =[];
-        address.push("6640 Akers Mill Rd SE")
-        for(i=1; i<5; i++){
-        var pushaddresses= document.getElementById('address').innerHTML + ", Atlanta, GA";
-        address.push(pushaddresses);
-        i++;
-        };
-
-        console.log(address);
-        
-        for(i=1; i<address.length; i++){
-        geocoder.geocode( { 'address': address[i]}, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            map.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location
-            });
-          } else {
-            console.log("this is not working");
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-          i++;
-          console.log(address[i]);
-
-        });
-      };
-    }
-
-
     </script>
 
 
@@ -79,7 +47,7 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body onload="initialize(); codeAddress(); "> <!--initialize();-->
+  <body onload="initialize(); codeAddress();"> <!--initialize();-->
     <nav class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
@@ -88,14 +56,19 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="index.php">HOME</a></li>
-          <li><a href="about.php">ABOUT</a></li>
-          <li><a href="cities.php">CITIES</a></li>
-          <li><a href="addshop.php">ADD A SHOP</a></li>
           <?php  if(!isset($_SESSION['username'])){
+          echo '<li><a href="index.php">HOME</a></li>';
+          echo '<li><a href="about.php">ABOUT</a></li>';
+          echo '<li><a href="cities.php">CITIES</a></li>';
+          echo '<li><a href="addshop.php">ADD A SHOP</a></li>';
           echo '<li><a href="signup.php">SIGN UP</a></li>';
           echo '<li><a href="login.php">LOGIN</a></li>'; 
           }else{
+          echo '<li class="welcome">Hello, '.$_SESSION['username'].'!</li>';
+          echo '<li><a href="index.php">HOME</a></li>';
+          echo '<li><a href="about.php">ABOUT</a></li>';
+          echo '<li><a href="cities.php">CITIES</a></li>';
+          echo '<li><a href="addshop.php">ADD A SHOP</a></li>';
           echo '<li><a href="logout.php">LOGOUT</a></li>';
           }?>
         </ul>
@@ -119,18 +92,17 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
         $stmt = $dbh->prepare('SELECT * FROM shops WHERE (cityId=1 AND statusId=1);');
         $stmt->execute();
         $result = $stmt->fetchall(PDO::FETCH_ASSOC);
-        $shopnumber= 0;
+        $addressData = array();
 
         foreach  ($result as $row) {
             echo '<div class="shop-list">';
             echo '<h2>'.$row['shop_name'].'</h2>';
             echo '<p id="address">'.$row['shop_location'].'</p>';
-            echo '<input id="address'.$shopnumber.'" type="textbox" value="'.$row['shop_location'].', Atlanta, GA" hidden>';
             echo '<p>'.$row['phone_number'].'</p>';
             echo '<a href="shop.php?id='.$row['shopId'].'&name='.$row['shop_name'].'&city='.$row['cityId'].'"><button type="submit" class="my-btn">READ MORE</button></a>';
-            $shopnumber+=1;
-            // echo '<p>'.$shopnumber.'</p>';
             echo '</div>';
+            array_push($addressData, $row['shop_location']);
+            
         }
 
         ?>
@@ -150,8 +122,27 @@ $dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pa
       <button class="col-md-2 my-btn" onClick="window.location.href='admin.php'">ADMIN LOGIN</button>
       </div>
     </div>
+    <script type="text/javascript">
+    var address =  <?php echo json_encode($addressData); ?>;
+    console.log(address);
 
-    
+    function codeAddress() {
+        for(i=0; i<address.length; i++){
+        geocoder.geocode( { 'address': address[i]}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+          i++;
+        });
+      };
+    }
+    </script>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

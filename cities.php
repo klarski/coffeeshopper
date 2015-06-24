@@ -1,5 +1,9 @@
 <?php
-session_start(); 
+session_start();
+
+$user="root";
+$pass="root";
+$dbh = new PDO('mysql:host=localhost;dbname=coffeeshopper;port=8889', $user, $pass);
 ?>
 
 <!DOCTYPE html>
@@ -32,14 +36,19 @@ session_start();
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="index.php">HOME</a></li>
-          <li><a href="about.php">ABOUT</a></li>
-          <li><a href="cities.php">CITIES</a></li>
-          <li><a href="addshop.php">ADD A SHOP</a></li>
           <?php  if(!isset($_SESSION['username'])){
+          echo '<li><a href="index.php">HOME</a></li>';
+          echo '<li><a href="about.php">ABOUT</a></li>';
+          echo '<li><a href="cities.php">CITIES</a></li>';
+          echo '<li><a href="addshop.php">ADD A SHOP</a></li>';
           echo '<li><a href="signup.php">SIGN UP</a></li>';
           echo '<li><a href="login.php">LOGIN</a></li>'; 
           }else{
+          echo '<li class="welcome">Hello, '.$_SESSION['username'].'!</li>';
+          echo '<li><a href="index.php">HOME</a></li>';
+          echo '<li><a href="about.php">ABOUT</a></li>';
+          echo '<li><a href="cities.php">CITIES</a></li>';
+          echo '<li><a href="addshop.php">ADD A SHOP</a></li>';
           echo '<li><a href="logout.php">LOGOUT</a></li>';
           }?>
         </ul>
@@ -53,27 +62,27 @@ session_start();
       <div class="row">
       <div>
         <div class="city">
-          <a href="atlanta.php"><img src="images/atl.jpg"></a>
+          <a href="atlanta.php"><img src="images/atl.jpg">
           <div class="city-title">
-            <h2 class="title_content">ATLANTA</h2>
+            <h2 class="title_content">ATLANTA</h2></a>
           </div>
         </div>
       </div>
 
       <div>
         <div class="city">
-         <a href="newyork.php"><img src="images/nyc.png"></a>
+         <a href="newyork.php"><img src="images/nyc.png">
           <div class="city-title">
-              <h2 class="title_content">NEW YORK</h2>
+              <h2 class="title_content">NEW YORK</h2></a>
           </div>
         </div>
       </div>
 
       <div>
         <div class="city">
-          <a href="sanfran.php"><img src="images/sf.jpg"></a>
+          <a href="sanfran.php"><img src="images/sf.jpg">
             <div class="city-title">
-              <h2 class="title_content">SAN FRANCISCO</h2>
+              <h2 class="title_content">SAN FRANCISCO</h2></a>
             </div>
         </div>
       </div>
@@ -81,7 +90,7 @@ session_start();
 
       <div>
         <div class="box-btn">
-          <h2>REQUEST A CITY</h2>
+          <a href="requestcity.php" target="_blank"><h2>REQUEST A CITY</h2></a>
         </div>
       </div>
     </div>
@@ -101,7 +110,6 @@ session_start();
       <button class="col-md-2 my-btn" onClick="window.location.href='admin.php'">ADMIN LOGIN</button>
       </div>
     </div>
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
